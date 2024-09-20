@@ -1,4 +1,4 @@
-package Lab1.functions;
+package functions;
 
 // Интерфейс мат. функции
 public interface MathFunction {
