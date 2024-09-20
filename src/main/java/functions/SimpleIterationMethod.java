@@ -27,6 +27,6 @@ public class SimpleIterationMethod {
             iterations++;
         }
 
-        throw new RuntimeException("Не удалось найти решение за " + maxIterations + " итераций.");
+        throw new RuntimeException("Failed to find solution in " + maxIterations + " iterations");
     }
 }
