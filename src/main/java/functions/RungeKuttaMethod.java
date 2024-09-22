@@ -8,6 +8,7 @@ public class RungeKuttaMethod implements MathFunction{
     private final BiFunction<Double, Double, Double> differentialEquation; // Обыкновенное Дифференциальное уравнение(ОДУ) первого порядка
     private final double x0, y0; // Начальные условия(НУ)
 
+
     // Конструктор иницализации ОДУ + НУ
     public RungeKuttaMethod(BiFunction<Double, Double, Double> differentialEquation, double x0, double y0) {
         this.differentialEquation = differentialEquation;

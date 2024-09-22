@@ -19,6 +19,7 @@ public class RungeKuttaMethodTest {
         RungeKuttaMethod differencialEquationY2 = new RungeKuttaMethod(function2, 1, 0.5);
         RungeKuttaMethod differencialEquationY3 = new RungeKuttaMethod(function3, 1, 1);
 
+
         assertEquals(1.645833333, differencialEquationY1.apply(1.0), 1e-9);
         assertEquals(0.50001, differencialEquationY2.apply(0.00001), 1e-9);
         assertEquals(1.248047933, differencialEquationY3.apply(0.111), 1e-9);
