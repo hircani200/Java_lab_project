@@ -1,32 +1,36 @@
 package functions;
 
-public class SimpleIterationMethod {
-    private final MathFunction phi;  // функция ϕ(x)
-    private final double tolerance;  // точность
-    private final int maxIterations; // максимальное количество итераций
+public class SimpleIterationMethod implements MathFunction {
 
-    public SimpleIterationMethod(MathFunction phi, double tolerance, int maxIterations) {
-        this.phi = phi;
-        this.tolerance = tolerance;
+    private final MathFunction g;  // Функция g(x) в уравнении x = g(x)
+    private final double epsilon;   // Точность
+    private final int maxIterations; // Максимальное количество итераций
+
+    public SimpleIterationMethod(MathFunction g, double epsilon, int maxIterations) {
+        this.g = g;
+        this.epsilon = epsilon;
         this.maxIterations = maxIterations;
     }
 
-    public double solve(double initialGuess) {
-        double x = initialGuess;
-        int iterations = 0;
-
-        while (iterations < maxIterations) {
-            double nextX = phi.apply(x);
-
-            // Проверка на достижение требуемой точности
-            if (Math.abs(nextX - x) < tolerance) {
-                return nextX;
+    public double findRoot(double initialGuess) {
+        double x0 = initialGuess;
+        double x1;
+        for (int i = 0; i < maxIterations; i++) {
+            x1 = apply(x0);
+            if (Math.abs(x1 - x0) < epsilon) {
+                return x1; // нашли корень
             }
-
-            x = nextX;
-            iterations++;
+            x0 = x1;
         }
+        throw new RuntimeException("Root not found within the maximum number of iterations");
+    }
 
-        throw new RuntimeException("Failed to find solution in " + maxIterations + " iterations");
+    @Override
+    public double apply(double x) {
+        double result = g.apply(x);
+        if (Double.isNaN(result) || Double.isInfinite(result)) {
+            throw new IllegalArgumentException("Function g(x) returned an invalid result at x = " + x);
+        }
+        return result;
     }
 }
