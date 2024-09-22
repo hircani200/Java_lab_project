@@ -13,7 +13,7 @@ public class RungeKuttaMethodTest {
         SqrFunction sqr = new SqrFunction();
         BiFunction<Double, Double, Double> function1 = (x,y) -> x*y;
         BiFunction<Double, Double, Double> function2 = (x, y) -> x;
-        BiFunction<Double, Double, Double> function3 = (x, y) -> sqr.apply(x)+ sqr.apply(y);
+        BiFunction<Double, Double, Double> function3 = (x, y) -> sqr.apply(x)+ (y);
 
         RungeKuttaMethod differencialEquationY1 = new RungeKuttaMethod(function1, 0, 1);
         RungeKuttaMethod differencialEquationY2 = new RungeKuttaMethod(function2, 1, 0.5);
@@ -21,6 +21,6 @@ public class RungeKuttaMethodTest {
 
         assertEquals(1.645833333, differencialEquationY1.apply(1.0), 1e-9);
         assertEquals(0.50001, differencialEquationY2.apply(0.00001), 1e-9);
-        assertEquals(1.264846958, differencialEquationY3.apply(0.111), 1e-9);
+        assertEquals(1.248047933, differencialEquationY3.apply(0.111), 1e-9);
     }
 }
