@@ -117,6 +117,40 @@ class ArrayTabulatedFunctionTest {
     }
 
     @Test
+    void testInsertWithXFromArray() {
+        double[] xValues = {1.0, 2.0, 3.0, 4.0};
+        double[] yValues = {2.0, 4.0, 6.0, 8.0};
+
+        ArrayTabulatedFunction function = new ArrayTabulatedFunction(xValues, yValues);
+
+        function.insert(3.0, 5.5);
+        yValues[2] = 5.5;
+
+        for (int i = 0; i < function.getCount(); i++) {
+            assertEquals(xValues[i], function.getX(i), 1e-9);
+            assertEquals(yValues[i], function.getY(i), 1e-9);
+        }
+    }
+
+    @Test
+    void testInsertWithXNotFromArray() {
+        double[] xValues = {1.0, 2.0, 3.0, 4.0};
+        double[] yValues = {2.0, 4.0, 6.0, 8.0};
+
+        ArrayTabulatedFunction function = new ArrayTabulatedFunction(xValues, yValues);
+
+        function.insert(3.5, 5.5);
+
+        double[] newXValues = {1.0, 2.0, 3.0, 3.5, 4.0};
+        double[] newYValues = {2.0, 4.0, 6.0, 5.5, 8.0};
+
+        for (int i = 0; i < function.getCount(); i++) {
+            assertEquals(newXValues[i], function.getX(i), 1e-9);
+            assertEquals(newYValues[i], function.getY(i), 1e-9);
+        }
+    }
+
+    @Test
     void testRemove() {
         double[] xValues = {1.0, 2.0, 3.0, 4.0, 5.0};
         double[] yValues = {1.0, 4.0, 9.0, 16.0, 25.0};
