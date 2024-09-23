@@ -70,12 +70,13 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
             xFrom = xTo;
             xTo = temp;
         }
+        this.count = count;
 
         head = new Node();
         Node pointer = head;
 
         // Прим. если xTo = xFrom, то xDelta = 0
-        double xDelta = (xTo - xFrom) / count;
+        double xDelta = (xTo - xFrom) / (count-1);
 
         for (int i = 0; i < count; i++) {
             pointer.x = xFrom + i * xDelta;
@@ -96,11 +97,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
         Node pointer = head;
 
-        if(index < count/2) {
-            for (int i = 0; i < index; i++) { pointer = pointer.next; }
-        } else{
-            for (int i = count; i > index; i--) { pointer = pointer.prev; }
-        }
+        for (int i = 0; i < index; i++) { pointer = pointer.next; }
 
         return pointer;
     }
