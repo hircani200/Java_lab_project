@@ -1,6 +1,6 @@
 package functions;
 
-public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Insertable {
+public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable {
 
     private Node head;
 
@@ -219,6 +219,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
             }
         }
     }
+
     @Override
     public void insert(double x, double y) {
         if (head == null) {
@@ -257,5 +258,28 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         pointer.next.prev = newNode;
         pointer.next = newNode;
         count++;
+    }
+
+    @Override
+    public void remove(int index){
+
+        if(count == 0){
+            throw new IllegalArgumentException("Cannot remove zero list");
+        }
+
+        Node pointer = head;
+
+        if(pointer.next!=pointer) {
+            for (int i = 0; i < index; i++) {pointer = pointer.next;}
+            if(pointer == head){head = head.next;}
+            (pointer.prev).next = pointer.next;
+            (pointer.next).prev = pointer.prev;
+
+            pointer = null;
+        } else{
+            head = null;
+        }
+
+        count--;
     }
 }

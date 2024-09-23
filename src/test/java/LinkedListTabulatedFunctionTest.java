@@ -1,4 +1,5 @@
 import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 
 import functions.LinkedListTabulatedFunction;
@@ -204,4 +205,43 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(7.0, function.getY(1));
     }
 
+    @Test
+    void testRemoveWithZeroElementsThrowsException(){
+
+        double[] xArray = {};
+        double[] yArray = {};
+        LinkedListTabulatedFunction linkedList = new LinkedListTabulatedFunction(xArray, yArray);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            linkedList.remove(3);
+        });
+    }
+
+    @Test
+    void testRemove(){
+
+        double[] xArray = {1.0, 2.0, 4.5, 10.0};
+        double[] yArray = {0.0, 3.0, 2.0, 1.1};
+        LinkedListTabulatedFunction linkedList = new LinkedListTabulatedFunction(xArray, yArray);
+
+        linkedList.remove(0);
+
+        double[] xNewArray = {2.0, 4.5, 10.0};
+        double[] yNewArray = {3.0, 2.0, 1.1};
+
+        for (int i = 0; i < linkedList.getCount(); i++) {
+            assertEquals(xNewArray[i], linkedList.getX(i), 1e-9);
+            assertEquals(yNewArray[i], linkedList.getY(i), 1e-9);
+        }
+
+        linkedList.remove(2);
+
+        double[] xNewArray1 = {2.0, 4.5};
+        double[] yNewArray1 = {3.0, 2.0};
+
+        for (int i = 0; i < linkedList.getCount(); i++) {
+            assertEquals(xNewArray1[i], linkedList.getX(i), 1e-9);
+            assertEquals(yNewArray1[i], linkedList.getY(i), 1e-9);
+        }
+    }
 }
