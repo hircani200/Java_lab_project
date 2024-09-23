@@ -133,7 +133,43 @@ class ArrayTabulatedFunctionTest {
     }
 
     @Test
-    void testInsertWithXNotFromArray() {
+    void testInsertWithXBelowZeroIndexElement(){
+        double[] xValues = {1.0, 2.0, 3.0, 4.0};
+        double[] yValues = {2.0, 4.0, 6.0, 8.0};
+
+        ArrayTabulatedFunction function = new ArrayTabulatedFunction(xValues, yValues);
+
+        function.insert(0.0, 5.5);
+
+        double[] newXValues = {0.0, 1.0, 2.0, 3.0, 4.0};
+        double[] newYValues = {5.5, 2.0, 4.0, 6.0, 8.0};
+
+        for (int i = 0; i < function.getCount(); i++) {
+            assertEquals(newXValues[i], function.getX(i), 1e-9);
+            assertEquals(newYValues[i], function.getY(i), 1e-9);
+        }
+    }
+
+    @Test
+    void testInsertWithXHigherLastIndexElement(){
+        double[] xValues = {1.0, 2.0, 3.0, 4.0};
+        double[] yValues = {2.0, 4.0, 6.0, 8.0};
+
+        ArrayTabulatedFunction function = new ArrayTabulatedFunction(xValues, yValues);
+
+        function.insert(5.0, 5.5);
+
+        double[] newXValues = {1.0, 2.0, 3.0, 4.0, 5.0};
+        double[] newYValues = {2.0, 4.0, 6.0, 8.0, 5.5};
+
+        for (int i = 0; i < function.getCount(); i++) {
+            assertEquals(newXValues[i], function.getX(i), 1e-9);
+            assertEquals(newYValues[i], function.getY(i), 1e-9);
+        }
+    }
+
+    @Test
+    void testInsertWithXInTheSegment() {
         double[] xValues = {1.0, 2.0, 3.0, 4.0};
         double[] yValues = {2.0, 4.0, 6.0, 8.0};
 
