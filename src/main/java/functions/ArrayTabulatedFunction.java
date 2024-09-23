@@ -2,7 +2,7 @@ package functions;
 
 import java.util.Arrays;
 
-public class ArrayTabulatedFunction extends AbstractTabulatedFunction {
+public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Removable {
 
     protected double[] xValues;
     protected double[] yValues;
@@ -138,5 +138,27 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction {
     @Override
     protected double interpolate(double x, int floorIndex) {
         return interpolate(x, xValues[floorIndex], xValues[floorIndex + 1], yValues[floorIndex], yValues[floorIndex + 1]);
+    }
+    @Override
+    public void remove(int index) {
+        if (count <= 2) {
+            throw new IllegalStateException("Cannot remove a point. The number of points must be at least 2");
+        }
+        if (index < 0 || index >= count) {
+            throw new IndexOutOfBoundsException("Invalid index");
+        }
+
+        double[] newXValues = new double[count - 1];
+        double[] newYValues = new double[count - 1];
+
+        System.arraycopy(xValues, 0, newXValues, 0, index);
+        System.arraycopy(yValues, 0, newYValues, 0, index);
+
+        System.arraycopy(xValues, index + 1, newXValues, index, count - index - 1);
+        System.arraycopy(yValues, index + 1, newYValues, index, count - index - 1);
+
+        this.xValues = newXValues;
+        this.yValues = newYValues;
+        this.count--;
     }
 }

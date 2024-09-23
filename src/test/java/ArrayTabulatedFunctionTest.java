@@ -115,4 +115,57 @@ class ArrayTabulatedFunctionTest {
         function.setY(1, 10.0);
         assertEquals(10.0, function.getY(1), 1e-9);
     }
+
+    @Test
+    void testRemove() {
+        double[] xValues = {1.0, 2.0, 3.0, 4.0, 5.0};
+        double[] yValues = {1.0, 4.0, 9.0, 16.0, 25.0};
+        ArrayTabulatedFunction function = new ArrayTabulatedFunction(xValues, yValues);
+
+        function.remove(2);
+
+        assertEquals(4, function.getCount());
+
+        assertEquals(1.0, function.getX(0));
+        assertEquals(2.0, function.getX(1));
+        assertEquals(4.0, function.getX(2));
+        assertEquals(5.0, function.getX(3));
+
+        assertEquals(1.0, function.getY(0));
+        assertEquals(4.0, function.getY(1));
+        assertEquals(16.0, function.getY(2));
+        assertEquals(25.0, function.getY(3));
+
+        function.remove(0);
+
+        assertEquals(3, function.getCount());
+
+        assertEquals(2.0, function.getX(0));
+        assertEquals(4.0, function.getX(1));
+        assertEquals(5.0, function.getX(2));
+
+        assertEquals(4.0, function.getY(0));
+        assertEquals(16.0, function.getY(1));
+        assertEquals(25.0, function.getY(2));
+    }
+
+    @Test
+    void testRemoveInvalidIndex() {
+        double[] xValues = {1.0, 2.0, 3.0, 4.0};
+        double[] yValues = {1.0, 4.0, 9.0, 16.0};
+        ArrayTabulatedFunction function = new ArrayTabulatedFunction(xValues, yValues);
+
+        assertThrows(IndexOutOfBoundsException.class, () -> function.remove(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> function.remove(4));
+    }
+
+    @Test
+    void testRemoveWithMinimumPoints() {
+        double[] xValues = {1.0, 2.0};
+        double[] yValues = {1.0, 4.0};
+        ArrayTabulatedFunction function = new ArrayTabulatedFunction(xValues, yValues);
+
+        assertThrows(IllegalStateException.class, () -> function.remove(0));
+    }
 }
+
