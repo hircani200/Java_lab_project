@@ -158,4 +158,50 @@ public class LinkedListTabulatedFunctionTest {
 
         assertEquals(0.936363636, linkedList.apply(11.0), 1e-9);
     }
+
+    @Test
+    void testInsertIntoEmptyList() {
+        LinkedListTabulatedFunction function = new LinkedListTabulatedFunction(new double[]{}, new double[]{});
+        function.insert(2.0, 4.0);
+        assertEquals(1, function.getCount());
+        assertEquals(2.0, function.getX(0));
+        assertEquals(4.0, function.getY(0));
+    }
+
+    @Test
+    void testInsertIntoBeginning() {
+        LinkedListTabulatedFunction function = new LinkedListTabulatedFunction(new double[]{1.0, 3.0, 5.0}, new double[]{2.0, 6.0, 10.0});
+        function.insert(0.5, 1.0);
+        assertEquals(4, function.getCount());
+        assertEquals(0.5, function.getX(0));
+        assertEquals(1.0, function.getY(0));
+    }
+
+    @Test
+    void testInsertIntoMiddle() {
+        LinkedListTabulatedFunction function = new LinkedListTabulatedFunction(new double[]{1.0, 3.0, 5.0}, new double[]{2.0, 6.0, 10.0});
+        function.insert(2.0, 3.0);
+        assertEquals(4, function.getCount());
+        assertEquals(2.0, function.getX(1));
+        assertEquals(3.0, function.getY(1));
+    }
+
+    @Test
+    void testInsertIntoEnd() {
+        LinkedListTabulatedFunction function = new LinkedListTabulatedFunction(new double[]{1.0, 3.0, 5.0}, new double[]{2.0, 6.0, 10.0});
+        function.insert(6.0, 12.0);
+        assertEquals(4, function.getCount());
+        assertEquals(6.0, function.getX(3));
+        assertEquals(12.0, function.getY(3));
+    }
+
+    @Test
+    void testUpdateYIfXExists() {
+        LinkedListTabulatedFunction function = new LinkedListTabulatedFunction(new double[]{1.0, 3.0, 5.0}, new double[]{2.0, 6.0, 10.0});
+        function.insert(3.0, 7.0);  // Обновляем y для x = 3.0
+        assertEquals(3, function.getCount());
+        assertEquals(3.0, function.getX(1));
+        assertEquals(7.0, function.getY(1));
+    }
+
 }

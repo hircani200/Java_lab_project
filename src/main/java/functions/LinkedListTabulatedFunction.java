@@ -1,6 +1,6 @@
 package functions;
 
-public class LinkedListTabulatedFunction extends AbstractTabulatedFunction{
+public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Insertable {
 
     private Node head;
 
@@ -60,7 +60,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction{
         }
 
         if (xValues.length != yValues.length) { throw new IllegalArgumentException("The sizes of the arrays must be the same");}
-        if (xValues.length < 2) { throw new IllegalArgumentException("The size of array must be at least 2");}
 
         for (int i = 0; i < xValues.length; i++) { this.addNode(xValues[i], yValues[i]);}
     }
@@ -219,5 +218,44 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction{
                 return interpolate(x, floorNodeOfX(x));
             }
         }
+    }
+    @Override
+    public void insert(double x, double y) {
+        if (head == null) {
+            addNode(x, y);
+            return;
+        }
+
+        if (x < head.x) {
+            Node newNode = new Node(x, y);
+            newNode.next = head;
+            newNode.prev = head.prev;
+            head.prev.next = newNode;
+            head.prev = newNode;
+            head = newNode;
+            count++;
+            return;
+        }
+
+        Node pointer = head;
+        while (pointer.next != head && pointer.next.x < x) {
+            pointer = pointer.next;
+        }
+
+        if (pointer.x == x) {
+            pointer.y = y;
+            return;
+        }
+        if (pointer.next.x == x) {
+            pointer.next.y = y;
+            return;
+        }
+
+        Node newNode = new Node(x, y);
+        newNode.next = pointer.next;
+        newNode.prev = pointer;
+        pointer.next.prev = newNode;
+        pointer.next = newNode;
+        count++;
     }
 }
