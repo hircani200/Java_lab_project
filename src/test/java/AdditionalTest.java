@@ -35,4 +35,28 @@ public class AdditionalTest {
             assertEquals(yArray5[i], tabulatedFunction5.getY(i), 1e-9);
         }
     }
+
+    @Test
+    public void test2(){
+
+        MathFunction function1 = (x) -> 2 * x + 3;
+        MathFunction function2 = (x) -> Math.log(x + 1);
+
+        CompositeFunctions compositeFunction = new CompositeFunctions(function2, function1);
+
+        LinkedListTabulatedFunction tabulatedFunction1 = new LinkedListTabulatedFunction(function1, 0, 2, 3);
+        ArrayTabulatedFunction tabulatedFunction2 = new ArrayTabulatedFunction(function2, 0, 2, 3);
+        LinkedListTabulatedFunction tabulatedFunction3 = new LinkedListTabulatedFunction(compositeFunction, 0, 2, 3);
+
+        double[] yArray1 = {3.0, 5.0, 7.0};
+        double[] yArray2 = {0.0, Math.log(2), Math.log(3)};
+        double[] yArray3 = {3.0, 2 * Math.log(2) + 3, 2 * Math.log(3) + 3};
+
+        for (int i = 0; i < tabulatedFunction1.getCount(); i++) {
+            assertEquals(yArray1[i], tabulatedFunction1.getY(i), 1e-9);
+            assertEquals(yArray2[i], tabulatedFunction2.getY(i), 1e-9);
+            assertEquals(yArray3[i], tabulatedFunction3.getY(i), 1e-9);
+        }
+
+    }
 }
