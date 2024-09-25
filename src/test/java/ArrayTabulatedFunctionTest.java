@@ -1,7 +1,9 @@
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import functions.ArrayTabulatedFunction;
 import functions.MathFunction;
+import org.junit.jupiter.api.Test;
 
 class ArrayTabulatedFunctionTest {
 
@@ -28,9 +30,7 @@ class ArrayTabulatedFunctionTest {
         double[] xValues = {1.0, 2.0, 3.0};
         double[] yValues = {2.0, 4.0};
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            new ArrayTabulatedFunction(xValues, yValues);
-        });
+        assertThrows(IllegalArgumentException.class, () -> new ArrayTabulatedFunction(xValues, yValues));
     }
 
     @Test
@@ -38,9 +38,7 @@ class ArrayTabulatedFunctionTest {
         double[] xValues = {1.0, 3.0, 2.0};
         double[] yValues = {2.0, 6.0, 4.0};
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            new ArrayTabulatedFunction(xValues, yValues);
-        });
+        assertThrows(IllegalArgumentException.class, () -> new ArrayTabulatedFunction(xValues, yValues));
     }
     @Test
     void testConstructorWithFunctionAndInterval() {
@@ -62,7 +60,7 @@ class ArrayTabulatedFunctionTest {
 
     @Test
     void testConstructorWithEqualXFromAndXTo() {
-        MathFunction constantFunction = x -> 5.0;
+        MathFunction constantFunction = _ -> 5.0;
         double xFrom = 2.0;
         double xTo = 2.0;
         int count = 5;

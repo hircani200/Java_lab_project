@@ -9,14 +9,14 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     public ArrayTabulatedFunction(double[] xValues, double[] yValues) {
         if (xValues.length != yValues.length) {
-            throw new IllegalArgumentException("the sizes of the arrays must be equal");
+            throw new IllegalArgumentException("The sizes of the arrays must be equal");
         }
         if (xValues.length < 2) {
-            throw new IllegalArgumentException("the size must be at least 2");
+            throw new IllegalArgumentException("The size must be at least 2");
         }
         for (int i = 1; i < xValues.length; i++) {
             if (xValues[i] <= xValues[i - 1]) {
-                throw new IllegalArgumentException("array values must be sorted");
+                throw new IllegalArgumentException("Array values must be sorted");
             }
         }
 
@@ -27,7 +27,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     public ArrayTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
         if (count < 2) {
-            throw new IllegalArgumentException("the number of points must be at least 2");
+            throw new IllegalArgumentException("The number of points must be at least 2");
         }
 
         this.count = count;

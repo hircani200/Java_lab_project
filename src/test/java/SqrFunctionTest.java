@@ -9,16 +9,9 @@ public class SqrFunctionTest {
     public void testApply() {
         SqrFunction sqrFunction = new SqrFunction();
 
-        // Проверяем квадрат положительного числа
-        assertEquals(9, sqrFunction.apply(3), 0.001);
-
-        // Проверяем квадрат отрицательного числа
-        assertEquals(9, sqrFunction.apply(-3), 0.001);
-
-        // Проверяем квадрат нуля
-        assertEquals(0, sqrFunction.apply(0), 0.001);
-
-        // Проверяем квадрат дробного числа
-        assertEquals(2.25, sqrFunction.apply(1.5), 0.001);
+        assertEquals(9, sqrFunction.apply(3), 1e-9);
+        assertEquals(9, sqrFunction.apply(-3), 1e-9);
+        assertEquals(0, sqrFunction.apply(0), 1e-9);
+        assertEquals(2.25, sqrFunction.apply(1.5), 1e-9);
     }
 }

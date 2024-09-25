@@ -7,9 +7,10 @@ public class UnitFunctionTest {
     @Test
     public void testUnitFunction() {
         UnitFunction unitFunction = new UnitFunction();
-        assertEquals(unitFunction.getConstant(), unitFunction.apply(10), 0.001);
-        assertEquals(unitFunction.getConstant(), unitFunction.apply(-3), 0.001);
-        assertEquals(unitFunction.getConstant(), unitFunction.apply(0), 0.001);
+
+        assertEquals(unitFunction.getConstant(), unitFunction.apply(10), 1e-9);
+        assertEquals(unitFunction.getConstant(), unitFunction.apply(-3), 1e-9);
+        assertEquals(unitFunction.getConstant(), unitFunction.apply(0), 1e-9);
     }
 
 }

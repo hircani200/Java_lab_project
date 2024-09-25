@@ -2,7 +2,7 @@ package functions;
 
 public abstract class AbstractTabulatedFunction implements TabulatedFunction {
 
-    protected int count; // Количество точек в таблице
+    protected int count;
 
     protected abstract int floorIndexOfX(double x);
 
@@ -14,10 +14,8 @@ public abstract class AbstractTabulatedFunction implements TabulatedFunction {
         return leftY + (x - leftX) * (rightY - leftY) / (rightX - leftX);
     }
 
-    // Экстраполяция слева
     protected abstract double extrapolateLeft(double x);
 
-    // Экстраполяция справа
     protected abstract double extrapolateRight(double x);
 
     @Override

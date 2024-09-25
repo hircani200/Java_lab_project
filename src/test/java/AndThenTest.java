@@ -1,9 +1,9 @@
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import functions.MathFunction;
 import functions.SqrFunction;
 import functions.SimpleIterationMethod;
+import org.junit.jupiter.api.Test;
 
 public class AndThenTest {
 
@@ -14,9 +14,9 @@ public class AndThenTest {
 
         MathFunction compositeFunction = sqrFunction.andThen(doubleFunction);
 
-        assertEquals(2 * Math.pow(2, 2), compositeFunction.apply(2), 1e-5); // 2 * 4 = 8
-        assertEquals(2 * Math.pow(3, 2), compositeFunction.apply(3), 1e-5); // 2 * 9 = 18
-        assertEquals(2 * Math.pow(0, 2), compositeFunction.apply(0), 1e-5); // 2 * 0 = 0
+        assertEquals(2 * Math.pow(2, 2), compositeFunction.apply(2), 1e-9);
+        assertEquals(2 * Math.pow(3, 2), compositeFunction.apply(3), 1e-9);
+        assertEquals(2 * Math.pow(0, 2), compositeFunction.apply(0), 1e-9);
     }
 
     @Test
@@ -29,7 +29,7 @@ public class AndThenTest {
         MathFunction compositeFunction = sqrFunction.andThen(simpleIterationMethod);
 
         double result = compositeFunction.apply(4);
-        assertEquals(8, result, 1e-5);
+        assertEquals(8, result, 1e-9);
     }
 
     @Test
@@ -40,8 +40,8 @@ public class AndThenTest {
 
         MathFunction compositeFunction = doubleFunction.andThen(sqrFunction).andThen(inverseFunction);
 
-        assertEquals(1 / Math.pow(2 * 2, 2), compositeFunction.apply(2), 1e-5);
-        assertEquals(1 / Math.pow(2 * 3, 2), compositeFunction.apply(3), 1e-5);
+        assertEquals(1 / Math.pow(2 * 2, 2), compositeFunction.apply(2), 1e-9);
+        assertEquals(1 / Math.pow(2 * 3, 2), compositeFunction.apply(3), 1e-9);
     }
 }
 
