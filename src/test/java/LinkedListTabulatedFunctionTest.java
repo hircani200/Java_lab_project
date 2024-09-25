@@ -63,7 +63,7 @@ public class LinkedListTabulatedFunctionTest {
         MathFunction function = x -> x*x + 2*x + 1;
         double xFrom = 1.0;
         double xTo = 4.0;
-        int count = 6;
+        int count = 7;
 
         LinkedListTabulatedFunction linkedList = new LinkedListTabulatedFunction(function, xFrom, xTo, count);
 
@@ -212,9 +212,7 @@ public class LinkedListTabulatedFunctionTest {
         double[] yArray = {};
         LinkedListTabulatedFunction linkedList = new LinkedListTabulatedFunction(xArray, yArray);
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            linkedList.remove(3);
-        });
+        assertThrows(IllegalArgumentException.class, () -> linkedList.remove(3));
     }
 
     @Test

@@ -4,7 +4,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     private Node head;
 
-    private static class Node{
+    protected static class Node{
         Node prev, next;
         double x, y;
 
@@ -272,7 +272,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
             (pointer.prev).next = pointer.next;
             (pointer.next).prev = pointer.prev;
 
-            pointer = null;
         } else{
             head = null;
         }
