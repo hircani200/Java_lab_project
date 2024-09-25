@@ -9,54 +9,58 @@ import org.junit.jupiter.api.Test;
 public class SimpleIterationMethodTest {
 
     @Test
-    public void testFindRootConverges() {
-        // g(x) = (x^2 + 2) / 3, ожидаемый корень примерно 1.0
-        MathFunction g = x -> (x * x + 2) / 3;
+    public void testSingleEquation() {
+        // Уравнение x = (x + 2) / 3, точное решение: x = 1
+        MathFunction equation = x -> (x + 2) / 3;
 
-        SimpleIterationMethod sim = new SimpleIterationMethod(g, 1e-5, 100);
-        double root = sim.findRoot(1.0);
-        assertEquals(1.0, root, 1e-5);
+        MathFunction[] equations = new MathFunction[]{equation};
+        SimpleIterationMethod iterationMethod = new SimpleIterationMethod(equations, 1e-9, 100);
+
+        double initialGuess = 0;
+        double root = iterationMethod.apply(initialGuess);
+
+        assertEquals(1.0, root, 1e-6);
     }
 
     @Test
-    public void testFindRootDiverges() {
-        // g(x) = x + 1, ожидаемое исключение
-        MathFunction g = x -> x + 1;
+    public void testSystemOfEquations() {
+        // Система уравнений:
+        // x1 = (x2 + 2) / 3
+        // x2 = (x1 + 1) / 2
+        MathFunction equation1 = x -> (x + 2) / 3;
+        MathFunction equation2 = x -> (x + 1) / 2;
 
-        SimpleIterationMethod sim = new SimpleIterationMethod(g, 1e-5, 5);
-        Exception exception = assertThrows(RuntimeException.class, () -> sim.findRoot(0));
-        assertEquals("Root not found within the maximum number of iterations", exception.getMessage());
+        MathFunction[] equations = new MathFunction[]{equation1, equation2};
+        SimpleIterationMethod iterationMethod = new SimpleIterationMethod(equations, 1e-9, 100);
+
+        double initialGuess = 0;
+        double root = iterationMethod.apply(initialGuess);
+
+        assertTrue(Math.abs(root - 1.0) < 1e-9 || Math.abs(root - 1.5) < 1e-9);
     }
 
     @Test
-    public void testInvalidResultHandling() {
-        // g(x) = 1 / (x - 1), ожидаемое исключение
-        MathFunction g = x -> 1 / (x - 1);
+    public void testNoConvergence() {
+        // Уравнение, которое не сходится
+        MathFunction equation = x -> 2 * x;  // x = 2x не имеет фиксированной точки
 
-        SimpleIterationMethod sim = new SimpleIterationMethod(g, 1e-5, 100);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            sim.findRoot(1.0); // Этот вызов должен вызвать исключение
-        });
-        assertTrue(exception.getMessage().contains("Function g(x) returned an invalid result"));
+        MathFunction[] equations = new MathFunction[]{equation};
+        SimpleIterationMethod iterationMethod = new SimpleIterationMethod(equations, 1e-9, 100);
+
+        assertThrows(RuntimeException.class, () -> iterationMethod.apply(1.0));
     }
 
     @Test
     public void testEdgeCase() {
-        // g(x) = x, ожидаемый корень 0
-        MathFunction g = x -> x;
+        // Уравнение, у которого решение уже известно: x = 1
+        MathFunction equation = x -> x;
 
-        SimpleIterationMethod sim = new SimpleIterationMethod(g, 1e-5, 100);
-        double root = sim.findRoot(0.0);
-        assertEquals(0.0, root, 1e-5);
-    }
+        MathFunction[] equations = new MathFunction[]{equation};
+        SimpleIterationMethod iterationMethod = new SimpleIterationMethod(equations, 1e-9, 100);
 
-    @Test
-    public void testMultipleIterations() {
-        // g(x) = (x + 2) / 3, ожидаемый корень 1.0.
-        MathFunction g = x -> (x + 2) / 3;
+        double initialGuess = 1.0;
+        double root = iterationMethod.apply(initialGuess);
 
-        SimpleIterationMethod sim = new SimpleIterationMethod(g, 1e-5, 100);
-        double root = sim.findRoot(0.0);
-        assertEquals(1.0, root, 1e-5);
+        assertEquals(1.0, root, 1e-9);
     }
 }

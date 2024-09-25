@@ -1,36 +1,50 @@
 package functions;
 
+import java.util.Arrays;
+
 public class SimpleIterationMethod implements MathFunction {
 
-    private final MathFunction g;  // Функция g(x) в уравнении x = g(x)
-    private final double epsilon;   // Точность
-    private final int maxIterations; // Максимальное количество итераций
+    private final MathFunction[] equations;  // Система уравнений
+    private final double epsilon;            // Точность
+    private final int maxIterations;         // Максимальное количество итераций
 
-    public SimpleIterationMethod(MathFunction g, double epsilon, int maxIterations) {
-        this.g = g;
+    public SimpleIterationMethod(MathFunction[] equations, double epsilon, int maxIterations) {
+        this.equations = equations;
         this.epsilon = epsilon;
         this.maxIterations = maxIterations;
     }
 
-    public double findRoot(double initialGuess) {
-        double x0 = initialGuess;
-        double x1;
-        for (int i = 0; i < maxIterations; i++) {
-            x1 = apply(x0);
-            if (Math.abs(x1 - x0) < epsilon) {
-                return x1; // нашли корень
-            }
-            x0 = x1;
-        }
-        throw new RuntimeException("Root not found within the maximum number of iterations");
-    }
-
     @Override
-    public double apply(double x) {
-        double result = g.apply(x);
-        if (Double.isNaN(result) || Double.isInfinite(result)) {
-            throw new IllegalArgumentException("Function g(x) returned an invalid result at x = " + x);
+    public double apply(double initialGuess) { // initialGuess начальное приближение для системы уравнений
+        double[] currentGuess = new double[equations.length];  // Текущие значения переменных
+        double[] nextGuess = new double[equations.length];     // Следующие значения переменных
+
+        // Инициализируем начальные приближения
+        Arrays.fill(currentGuess, initialGuess);
+
+        // Итерационный процесс
+        for (int iteration = 0; iteration < maxIterations; iteration++) {
+            boolean converged = true;
+
+            // Применяем функцию g для каждой переменной
+            for (int i = 0; i < equations.length; i++) {
+                nextGuess[i] = equations[i].apply(currentGuess[i]);  // Вычисляем следующее значение
+
+                // Проверяем, достигнута ли сходимость для каждой переменной
+                if (Math.abs(nextGuess[i] - currentGuess[i]) >= epsilon) {
+                    converged = false;
+                }
+            }
+
+            // Если все переменные удовлетворяют точности, то решение найдено
+            if (converged) {
+                return nextGuess[0];
+            }
+
+            // Обновляем текущее приближение для следующей итерации
+            System.arraycopy(nextGuess, 0, currentGuess, 0, currentGuess.length);
         }
-        return result;
+
+        throw new RuntimeException("Root not found within the maximum number of iterations");
     }
 }

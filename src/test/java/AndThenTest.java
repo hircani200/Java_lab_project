@@ -1,8 +1,8 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import functions.SimpleIterationMethod;
 import functions.MathFunction;
 import functions.SqrFunction;
-import functions.SimpleIterationMethod;
 import org.junit.jupiter.api.Test;
 
 public class AndThenTest {
@@ -21,15 +21,13 @@ public class AndThenTest {
 
     @Test
     void testCompositeWithSimpleIterationMethod() {
-        MathFunction g = x -> x / 2;
-
-        MathFunction simpleIterationMethod = new SimpleIterationMethod(g, 1e-5, 1000);
-
+        MathFunction g = x -> (x + 4) / 2;
+        MathFunction simpleIterationMethod = new SimpleIterationMethod(new MathFunction[]{g}, 1e-9, 1000);
         MathFunction sqrFunction = new SqrFunction();
         MathFunction compositeFunction = sqrFunction.andThen(simpleIterationMethod);
 
-        double result = compositeFunction.apply(4);
-        assertEquals(8, result, 1e-9);
+        double result = compositeFunction.apply(2);
+        assertEquals(4, result, 1e-9);
     }
 
     @Test
