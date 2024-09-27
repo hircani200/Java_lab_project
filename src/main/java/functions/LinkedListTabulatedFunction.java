@@ -223,7 +223,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
             addNode(x, y);
             return;
         }
-
         if (x < head.x) {
             Node newNode = new Node(x, y);
             newNode.next = head;
@@ -234,21 +233,23 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
             count++;
             return;
         }
-
-        Node pointer = head;
-        while (pointer.next != head && pointer.next.x < x) {
-            pointer = pointer.next;
+        Node pointer;
+        if (x > head.prev.x) {
+            pointer = head.prev;
+        } else {
+            pointer = head;
+            while (pointer.next != head && pointer.next.x < x) {
+                pointer = pointer.next;
+            }
         }
-
         if (pointer.x == x) {
             pointer.y = y;
             return;
         }
-        if (pointer.next.x == x) {
+        if (pointer.next != head && pointer.next.x == x) {
             pointer.next.y = y;
             return;
         }
-
         Node newNode = new Node(x, y);
         newNode.next = pointer.next;
         newNode.prev = pointer;

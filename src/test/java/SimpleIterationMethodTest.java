@@ -47,7 +47,7 @@ public class SimpleIterationMethodTest {
         MathFunction[] equations = new MathFunction[]{equation};
         SimpleIterationMethod iterationMethod = new SimpleIterationMethod(equations, 1e-9, 100);
 
-        assertThrows(RuntimeException.class, () -> iterationMethod.apply(1.0));
+        assertThrows(IllegalStateException.class, () -> iterationMethod.apply(1.0));
     }
 
     @Test

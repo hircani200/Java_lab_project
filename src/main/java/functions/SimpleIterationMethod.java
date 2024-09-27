@@ -45,6 +45,6 @@ public class SimpleIterationMethod implements MathFunction {
             System.arraycopy(nextGuess, 0, currentGuess, 0, currentGuess.length);
         }
 
-        throw new RuntimeException("Root not found within the maximum number of iterations");
+        throw new IllegalStateException("Root not found within maximum iterations: " + maxIterations);
     }
 }
