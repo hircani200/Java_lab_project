@@ -52,16 +52,22 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     public LinkedListTabulatedFunction(double[] xValues, double[] yValues) {
 
-        for (int i = 0; i < xValues.length - 1; i++) {
-            for (int j = i+1; j < xValues.length; j++) {
-                if(xValues[i] == xValues[j]) { throw new IllegalArgumentException("The array must be without duplicates");}
-            }
-            if(xValues[i] > xValues[i+1]){ throw new IllegalArgumentException("The array should be sorted");}
-        }
-
         if (xValues.length != yValues.length) { throw new IllegalArgumentException("The sizes of the arrays must be the same");}
 
-        for (int i = 0; i < xValues.length; i++) { this.addNode(xValues[i], yValues[i]);}
+        if(xValues.length != 0){
+            for (int i = 0; i < xValues.length - 1; i++) {
+                for (int j = i+1; j < xValues.length; j++) {
+                    if(xValues[i] == xValues[j]) { throw new IllegalArgumentException("The array must be without duplicates");}
+                }
+                if(xValues[i] > xValues[i+1]){ throw new IllegalArgumentException("The array should be sorted");}
+
+                this.addNode(xValues[i], yValues[i]);
+            }
+            this.addNode(xValues[xValues.length-1], yValues[xValues.length-1]);
+        } else{
+            this.head=null;
+        }
+        this.count = xValues.length;
     }
 
     public LinkedListTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
@@ -97,7 +103,11 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
         Node pointer = head;
 
-        for (int i = 0; i < index; i++) { pointer = pointer.next; }
+        if(index>0) {
+            for (int i = 0; i < index; i++) { pointer = pointer.next;}
+        } else{
+            for (int i = index; i < 0; i++) { pointer = pointer.prev;}
+        }
 
         return pointer;
     }
@@ -142,10 +152,12 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     @Override
     public double leftBound(){
+        if(head == null) { throw new IllegalStateException("Head is null");}
         return head.x;
     }
     @Override
     public double rightBound(){
+        if(head == null) { throw new IllegalStateException("Head is null");}
         return head.prev.x;
     }
 
@@ -154,9 +166,10 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         if (x < head.x) {
             return 0;
         }
-        Node pointer = head.next;
-        for (int i = 1; i < count; i++) {
-            if (x < pointer.x) { return i - 1; }
+        Node pointer = head;
+        for (int i = 0; i < count; i++) {
+            if (x < pointer.next.x) { return i - 1; }
+            pointer = pointer.next;
         }
         return count;
     }
@@ -176,7 +189,11 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     @Override
     protected double interpolate(double x, int floorIndex) {
         Node pointer = head;
-        for (int i = 0; i <= floorIndex; i++) {pointer = pointer.next;}
+        if(floorIndex>0){
+            for (int i = 0; i < floorIndex; i++) {pointer = pointer.next;}
+        } else{
+            for (int i = floorIndex; i < 0; ++i) {pointer = pointer.next;}
+        }
 
         return interpolate(x, pointer.x, pointer.next.x, pointer.y, pointer.next.y);
     }
@@ -268,7 +285,8 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         Node pointer = head;
 
         if(pointer.next!=pointer) {
-            for (int i = 0; i < index; i++) {pointer = pointer.next;}
+            if(index>0) {for (int i = 0; i < index; i++) {pointer = pointer.next;} }
+            else{for (int i = index; i < 0; i++) {pointer = pointer.prev;} }
             if(pointer == head){head = head.next;}
             (pointer.prev).next = pointer.next;
             (pointer.next).prev = pointer.prev;

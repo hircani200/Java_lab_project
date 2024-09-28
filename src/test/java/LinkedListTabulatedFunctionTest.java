@@ -41,6 +41,29 @@ public class LinkedListTabulatedFunctionTest {
     }
 
     @Test
+    void testGetterWithIndexLesserThanZero(){
+
+        double[] xArray = {1.0, 2.0, 3.0, 4.0};
+        double[] yArray = {0.0, 3.0, 2.0, 1.1};
+        LinkedListTabulatedFunction linkedList = new LinkedListTabulatedFunction(xArray, yArray);
+
+        assertEquals(2.0, linkedList.getX(-3));
+        assertEquals(1.1, linkedList.getY(-1));
+    }
+
+    @Test
+    void testSetterWithIndexLesserThanZero(){
+
+        double[] xArray = {1.0, 2.0, 3.0, 4.0};
+        double[] yArray = {0.0, 3.0, 2.0, 1.1};
+        LinkedListTabulatedFunction linkedList = new LinkedListTabulatedFunction(xArray, yArray);
+
+        linkedList.setY(-3, 1.0);
+
+        assertEquals(1.0, linkedList.getY(-3));
+    }
+
+    @Test
     void testConstructorArraysWithDifferentSizeThrowsException(){
 
         double[] xArray = {1.0, 2.0, 4.5};
@@ -130,6 +153,8 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(10.0, linkedList.rightBound());
     }
 
+
+
     @Test
     void testWithInterpolation(){
 
@@ -162,7 +187,7 @@ public class LinkedListTabulatedFunctionTest {
 
     @Test
     void testInsertIntoEmptyList() {
-        LinkedListTabulatedFunction function = new LinkedListTabulatedFunction(new double[]{}, new double[]{});
+        LinkedListTabulatedFunction function = new LinkedListTabulatedFunction(new double[0], new double[0]);
         function.insert(2.0, 4.0);
         assertEquals(1, function.getCount());
         assertEquals(2.0, function.getX(0));
@@ -240,6 +265,15 @@ public class LinkedListTabulatedFunctionTest {
         for (int i = 0; i < linkedList.getCount(); i++) {
             assertEquals(xNewArray1[i], linkedList.getX(i), 1e-9);
             assertEquals(yNewArray1[i], linkedList.getY(i), 1e-9);
+        }
+
+        linkedList.remove(-4);
+        double[] xNewArray2 = {4.5};
+        double[] yNewArray2 = {2.0};
+
+        for (int i = 0; i < linkedList.getCount(); i++) {
+            assertEquals(xNewArray2[i], linkedList.getX(i), 1e-9);
+            assertEquals(yNewArray2[i], linkedList.getY(i), 1e-9);
         }
     }
 }
