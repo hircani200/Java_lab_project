@@ -52,21 +52,21 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     public LinkedListTabulatedFunction(double[] xValues, double[] yValues) {
 
+        if (xValues.length < 2) {
+            throw new IllegalArgumentException("The number of points must be at least 2");
+        }
+
         if (xValues.length != yValues.length) { throw new IllegalArgumentException("The sizes of the arrays must be the same");}
 
-        if(xValues.length != 0){
-            for (int i = 0; i < xValues.length - 1; i++) {
-                for (int j = i+1; j < xValues.length; j++) {
-                    if(xValues[i] == xValues[j]) { throw new IllegalArgumentException("The array must be without duplicates");}
-                }
-                if(xValues[i] > xValues[i+1]){ throw new IllegalArgumentException("The array should be sorted");}
-
-                this.addNode(xValues[i], yValues[i]);
+        for (int i = 0; i < xValues.length - 1; i++) {
+            for (int j = i+1; j < xValues.length; j++) {
+                if(xValues[i] == xValues[j]) { throw new IllegalArgumentException("The array must be without duplicates");}
             }
-            this.addNode(xValues[xValues.length-1], yValues[xValues.length-1]);
-        } else{
-            this.head=null;
+            if(xValues[i] > xValues[i+1]){ throw new IllegalArgumentException("The array should be sorted");}
+            this.addNode(xValues[i], yValues[i]);
         }
+        this.addNode(xValues[xValues.length-1], yValues[xValues.length-1]);
+
         this.count = xValues.length;
     }
 
@@ -164,7 +164,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     @Override
     protected int floorIndexOfX(double x) {
         if (x < head.x) {
-            return 0;
+            throw new IllegalArgumentException("Lesser than left left bound");
         }
         Node pointer = head;
         for (int i = 0; i < count; i++) {
@@ -176,7 +176,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     protected Node floorNodeOfX(double x) {
         if (x < head.x) {
-            return head;
+            throw new IllegalArgumentException("Lesser than left left bound");
         }
         Node pointer = head;
         for (int i = 0; i < count; i++) {

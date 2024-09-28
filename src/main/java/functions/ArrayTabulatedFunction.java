@@ -18,6 +18,9 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
             if (xValues[i] <= xValues[i - 1]) {
                 throw new IllegalArgumentException("Array values must be sorted");
             }
+            for (int j = i+1; j < xValues.length; j++) {
+                if(xValues[i] == xValues[j]) {throw new IllegalArgumentException("The array must be without duplicates");}
+            }
         }
 
         this.xValues = Arrays.copyOf(xValues, xValues.length);
@@ -108,7 +111,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     @Override
     protected int floorIndexOfX(double x) {
         if (x < xValues[0]) {
-            return 0;
+            throw new IllegalArgumentException("Lesser than left left bound");
         }
         for (int i = 1; i < count; i++) {
             if (x < xValues[i]) {

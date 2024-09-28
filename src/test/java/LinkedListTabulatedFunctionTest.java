@@ -186,15 +186,6 @@ public class LinkedListTabulatedFunctionTest {
     }
 
     @Test
-    void testInsertIntoEmptyList() {
-        LinkedListTabulatedFunction function = new LinkedListTabulatedFunction(new double[0], new double[0]);
-        function.insert(2.0, 4.0);
-        assertEquals(1, function.getCount());
-        assertEquals(2.0, function.getX(0));
-        assertEquals(4.0, function.getY(0));
-    }
-
-    @Test
     void testInsertIntoBeginning() {
         LinkedListTabulatedFunction function = new LinkedListTabulatedFunction(new double[]{1.0, 3.0, 5.0}, new double[]{2.0, 6.0, 10.0});
         function.insert(0.5, 1.0);
@@ -228,16 +219,6 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(3, function.getCount());
         assertEquals(3.0, function.getX(1));
         assertEquals(7.0, function.getY(1));
-    }
-
-    @Test
-    void testRemoveWithZeroElementsThrowsException(){
-
-        double[] xArray = {};
-        double[] yArray = {};
-        LinkedListTabulatedFunction linkedList = new LinkedListTabulatedFunction(xArray, yArray);
-
-        assertThrows(IllegalArgumentException.class, () -> linkedList.remove(3));
     }
 
     @Test

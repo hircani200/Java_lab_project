@@ -40,6 +40,15 @@ class ArrayTabulatedFunctionTest {
 
         assertThrows(IllegalArgumentException.class, () -> new ArrayTabulatedFunction(xValues, yValues));
     }
+
+    @Test
+    void testConstructorWithArraysThrowsExceptionForDuplicates() {
+        double[] xValues = {1.0, 3.0, 1.0};
+        double[] yValues = {2.0, 6.0, 4.0};
+
+        assertThrows(IllegalArgumentException.class, () -> new ArrayTabulatedFunction(xValues, yValues));
+    }
+
     @Test
     void testConstructorWithFunctionAndInterval() {
         MathFunction linearFunction = x -> 2 * x;
