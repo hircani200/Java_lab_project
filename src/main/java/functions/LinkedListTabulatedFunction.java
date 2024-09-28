@@ -1,5 +1,6 @@
 package functions;
 
+import exceptions.InterpolationException;
 import java.util.Iterator;
 
 public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable {
@@ -54,20 +55,16 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     public LinkedListTabulatedFunction(double[] xValues, double[] yValues) {
 
+        AbstractTabulatedFunction.checkLengthIsTheSame(xValues, yValues);
+        AbstractTabulatedFunction.checkSorted(xValues);
+
         if (xValues.length < 2) {
             throw new IllegalArgumentException("The number of points must be at least 2");
         }
 
-        if (xValues.length != yValues.length) { throw new IllegalArgumentException("The sizes of the arrays must be the same");}
-
-        for (int i = 0; i < xValues.length - 1; i++) {
-            for (int j = i+1; j < xValues.length; j++) {
-                if(xValues[i] == xValues[j]) { throw new IllegalArgumentException("The array must be without duplicates");}
-            }
-            if(xValues[i] > xValues[i+1]){ throw new IllegalArgumentException("The array should be sorted");}
+        for (int i = 0; i < xValues.length; i++) {
             this.addNode(xValues[i], yValues[i]);
         }
-        this.addNode(xValues[xValues.length-1], yValues[xValues.length-1]);
 
         this.count = xValues.length;
     }
@@ -176,7 +173,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         return count;
     }
 
-    protected Node floorNodeOfX(double x) {
+    public Node floorNodeOfX(double x) {
         if (x < head.x) {
             throw new IllegalArgumentException("Lesser than left left bound");
         }
@@ -200,7 +197,10 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         return interpolate(x, pointer.x, pointer.next.x, pointer.y, pointer.next.y);
     }
 
-    protected double interpolate(double x, Node floorNode) {
+    public double interpolate(double x, Node floorNode) {
+        if (x < floorNode.x || x > floorNode.next.x) {
+            throw new InterpolationException("x is out of interpolation bounds");
+        }
         return interpolate(x, floorNode.x, floorNode.next.x, floorNode.y, floorNode.next.y);
     }
 

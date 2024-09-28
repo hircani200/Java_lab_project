@@ -1,5 +1,6 @@
 package functions;
 
+import exceptions.InterpolationException;
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -9,19 +10,11 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     protected double[] yValues;
 
     public ArrayTabulatedFunction(double[] xValues, double[] yValues) {
-        if (xValues.length != yValues.length) {
-            throw new IllegalArgumentException("The sizes of the arrays must be equal");
-        }
+        AbstractTabulatedFunction.checkLengthIsTheSame(xValues, yValues);
+        AbstractTabulatedFunction.checkSorted(xValues);
+
         if (xValues.length < 2) {
             throw new IllegalArgumentException("The size must be at least 2");
-        }
-        for (int i = 1; i < xValues.length; i++) {
-            if (xValues[i] <= xValues[i - 1]) {
-                throw new IllegalArgumentException("Array values must be sorted");
-            }
-            for (int j = i+1; j < xValues.length; j++) {
-                if(xValues[i] == xValues[j]) {throw new IllegalArgumentException("The array must be without duplicates");}
-            }
         }
 
         this.xValues = Arrays.copyOf(xValues, xValues.length);
@@ -140,7 +133,10 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     }
 
     @Override
-    protected double interpolate(double x, int floorIndex) {
+    public double interpolate(double x, int floorIndex) {
+        if (x < xValues[floorIndex] || x > xValues[floorIndex + 1]) {
+            throw new InterpolationException("x is out of interpolation bounds");
+        }
         return interpolate(x, xValues[floorIndex], xValues[floorIndex + 1], yValues[floorIndex], yValues[floorIndex + 1]);
     }
 

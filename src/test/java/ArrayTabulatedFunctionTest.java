@@ -3,6 +3,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import functions.ArrayTabulatedFunction;
 import functions.MathFunction;
+import exceptions.DifferentLengthOfArraysException;
+import exceptions.InterpolationException;
+import exceptions.ArrayIsNotSortedException;
 import org.junit.jupiter.api.Test;
 
 class ArrayTabulatedFunctionTest {
@@ -30,7 +33,7 @@ class ArrayTabulatedFunctionTest {
         double[] xValues = {1.0, 2.0, 3.0};
         double[] yValues = {2.0, 4.0};
 
-        assertThrows(IllegalArgumentException.class, () -> new ArrayTabulatedFunction(xValues, yValues));
+        assertThrows(DifferentLengthOfArraysException.class, () -> new ArrayTabulatedFunction(xValues, yValues));
     }
 
     @Test
@@ -38,13 +41,20 @@ class ArrayTabulatedFunctionTest {
         double[] xValues = {1.0, 3.0, 2.0};
         double[] yValues = {2.0, 6.0, 4.0};
 
-        assertThrows(IllegalArgumentException.class, () -> new ArrayTabulatedFunction(xValues, yValues));
+        assertThrows(ArrayIsNotSortedException.class, () -> new ArrayTabulatedFunction(xValues, yValues));
     }
 
     @Test
     void testConstructorWithArraysThrowsExceptionForDuplicates() {
         double[] xValues = {1.0, 3.0, 1.0};
         double[] yValues = {2.0, 6.0, 4.0};
+
+        assertThrows(ArrayIsNotSortedException.class, () -> new ArrayTabulatedFunction(xValues, yValues));
+    }
+    @Test
+    void testConstructorWithArraysThrowsExceptionForSizeLessThanTwo() {
+        double[] xValues = {1.0};
+        double[] yValues = {2.0};
 
         assertThrows(IllegalArgumentException.class, () -> new ArrayTabulatedFunction(xValues, yValues));
     }
@@ -89,6 +99,17 @@ class ArrayTabulatedFunctionTest {
         ArrayTabulatedFunction function = new ArrayTabulatedFunction(xValues, yValues);
 
         assertEquals(5.0, function.apply(2.5), 1e-9);
+    }
+
+    @Test
+    void testInterpolationException() {
+        double[] xValues = {1.0, 2.0, 3.0};
+        double[] yValues = {4.0, 5.0, 6.0};
+
+        ArrayTabulatedFunction arrayFunction = new ArrayTabulatedFunction(xValues, yValues);
+        assertThrows(InterpolationException.class,
+                () -> arrayFunction.interpolate(3.5, 1));
+
     }
 
     @Test

@@ -25,7 +25,7 @@ public class AbstractTabulatedFunctionTest {
         xValues = new double[]{1.0, 2.0, 3.0, 5.0};
         Assertions.assertDoesNotThrow(() -> AbstractTabulatedFunction.checkSorted(xValues));
         xValues = new double[]{1.0, 1.0, 2.0, 3.5};
-        Assertions.assertDoesNotThrow(() -> AbstractTabulatedFunction.checkSorted(xValues));
+        Assertions.assertThrows(ArrayIsNotSortedException.class, () -> AbstractTabulatedFunction.checkSorted(xValues));
         xValues = new double[]{1.0, 1.5, 3.0, 2.0};
         Assertions.assertThrows(ArrayIsNotSortedException.class, () -> AbstractTabulatedFunction.checkSorted(xValues));
     }
