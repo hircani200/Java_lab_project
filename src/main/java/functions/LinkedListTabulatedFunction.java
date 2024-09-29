@@ -313,8 +313,9 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
             @Override
             public Point next() {
                 if (!hasNext()){ throw new NoSuchElementException("There are no other elements");}
+                Point point = (node.next != head) ? new Point(node.x, node.y) : null;
                 node = node.next;
-                return (node != head) ? new Point(node.x, node.y) : null;
+                return point;
             }
         };
     }
