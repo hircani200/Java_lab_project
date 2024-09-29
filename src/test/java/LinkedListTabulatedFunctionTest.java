@@ -198,6 +198,16 @@ public class LinkedListTabulatedFunctionTest {
     }
 
     @Test
+    void testInterpolationException2() {
+        double[] xValues = {1.0, 2.0, 3.0};
+        double[] yValues = {4.0, 5.0, 6.0};
+
+        LinkedListTabulatedFunction linkedListFunction = new LinkedListTabulatedFunction(xValues, yValues);
+        assertThrows(InterpolationException.class,
+                () -> linkedListFunction.interpolate(3.5, 1));
+    }
+
+    @Test
     void testInsertIntoBeginning() {
         LinkedListTabulatedFunction function = new LinkedListTabulatedFunction(new double[]{1.0, 3.0, 5.0}, new double[]{2.0, 6.0, 10.0});
         function.insert(0.5, 1.0);

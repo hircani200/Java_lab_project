@@ -6,6 +6,8 @@ import functions.MathFunction;
 import exceptions.DifferentLengthOfArraysException;
 import exceptions.InterpolationException;
 import exceptions.ArrayIsNotSortedException;
+import java.util.Iterator;
+import functions.Point;
 import org.junit.jupiter.api.Test;
 
 class ArrayTabulatedFunctionTest {
@@ -264,6 +266,38 @@ class ArrayTabulatedFunctionTest {
         ArrayTabulatedFunction function = new ArrayTabulatedFunction(xValues, yValues);
 
         assertThrows(IllegalStateException.class, () -> function.remove(0));
+    }
+
+    @Test
+    public void testArrayIteratorWithWhile() {
+        ArrayTabulatedFunction function = new ArrayTabulatedFunction(new double[]{1.0, 2.0, 3.0}, new double[]{10.0, 20.0, 30.0});
+        Iterator<Point> iterator = function.iterator();
+        int index = 0;
+
+        while (iterator.hasNext()) {
+            Point point = iterator.next();
+            assertEquals(function.getX(index), point.x, 1e-9);
+            assertEquals(function.getY(index), point.y, 1e-9);
+            index++;
+        }
+
+        assertEquals(function.getCount(), index);
+    }
+
+    @Test
+    public void testForEach() {
+        double[] xValues = {1.0, 2.0, 3.0};
+        double[] yValues = {10.0, 20.0, 30.0};
+
+        ArrayTabulatedFunction function = new ArrayTabulatedFunction(xValues, yValues);
+
+        int index = 0;
+        for (Point point : function) {
+            assertEquals(xValues[index], point.x, 1e-9);
+            assertEquals(yValues[index], point.y, 1e-9);
+            index++;
+        }
+        assertEquals(xValues.length, index);
     }
 }
 

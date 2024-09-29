@@ -186,15 +186,12 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     }
 
     @Override
-    protected double interpolate(double x, int floorIndex) {
-        Node pointer = head;
-        if(floorIndex>0){
-            for (int i = 0; i < floorIndex; i++) {pointer = pointer.next;}
-        } else{
-            for (int i = floorIndex; i < 0; ++i) {pointer = pointer.next;}
+    public double interpolate(double x, int floorIndex) {
+        Node floorNode = getNode(floorIndex);
+        if (x < floorNode.x || x > floorNode.next.x) {
+            throw new InterpolationException("x is out of interpolation range");
         }
-
-        return interpolate(x, pointer.x, pointer.next.x, pointer.y, pointer.next.y);
+        return interpolate(x, floorNode.x, floorNode.next.x, floorNode.y, floorNode.next.y);
     }
 
     public double interpolate(double x, Node floorNode) {

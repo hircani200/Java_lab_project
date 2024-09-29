@@ -1,10 +1,12 @@
 package functions;
 
 import exceptions.InterpolationException;
+import java.util.NoSuchElementException;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.lang.Iterable;
 
-public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Removable, Insertable {
+public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Removable, Insertable, Iterable<Point> {
 
     protected double[] xValues;
     protected double[] yValues;
@@ -211,6 +213,23 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     public Iterator<Point> iterator() {
-        throw new UnsupportedOperationException();
+        return new Iterator<>() {
+            private int i = 0;
+
+            @Override
+            public boolean hasNext() {
+                return i < getCount();
+            }
+
+            @Override
+            public Point next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                Point point = new Point(xValues[i], yValues[i]);
+                i++;
+                return point;
+            }
+        };
     }
 }
