@@ -2,8 +2,10 @@ package functions;
 
 import exceptions.InterpolationException;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.lang.Iterable;
 
-public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable {
+public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable, Iterable<Point> {
 
     private Node head;
 
@@ -299,6 +301,21 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     @Override
     public Iterator<Point> iterator() {
-        throw new UnsupportedOperationException();
+        return new Iterator<>() {
+
+            private Node node = head;
+
+            @Override
+            public boolean hasNext() {
+                return node.next!=head;
+            }
+
+            @Override
+            public Point next() {
+                if (!hasNext()){ throw new NoSuchElementException("There are no other elements");}
+                node = node.next;
+                return (node != head) ? new Point(node.x, node.y) : null;
+            }
+        };
     }
 }

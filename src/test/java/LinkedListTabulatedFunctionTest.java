@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 
 import functions.LinkedListTabulatedFunction;
 import functions.MathFunction;
+import functions.Point;
+import java.util.Iterator;
+
 
 public class LinkedListTabulatedFunctionTest {
 
@@ -278,5 +281,42 @@ public class LinkedListTabulatedFunctionTest {
             assertEquals(xNewArray2[i], linkedList.getX(i), 1e-9);
             assertEquals(yNewArray2[i], linkedList.getY(i), 1e-9);
         }
+    }
+
+    @Test
+    void testIteratorWithWhile(){
+        double[] xArray = {1.0, 2.0, 4.5, 10.0};
+        double[] yArray = {0.0, 3.0, 2.0, 1.1};
+        LinkedListTabulatedFunction linkedListFunction = new LinkedListTabulatedFunction(xArray, yArray);
+
+        Iterator<Point> iterator = linkedListFunction.iterator();
+        int index = 0;
+
+        while (iterator.hasNext()) {
+            Point point = iterator.next();
+            assertEquals(linkedListFunction.getX(index), point.x, 1e-9);
+            assertEquals(linkedListFunction.getY(index), point.y, 1e-9);
+            index++;
+        }
+
+        assertEquals(linkedListFunction.getCount()-1, index);
+    }
+
+    @Test
+    void testIteratorWithFor(){
+        double[] xArray = {1.0, 2.0, 4.5, 10.0};
+        double[] yArray = {0.0, 3.0, 2.0, 1.1};
+        LinkedListTabulatedFunction linkedListFunction = new LinkedListTabulatedFunction(xArray, yArray);
+
+        int index = 0;
+
+        for(Point point : linkedListFunction){
+            assertEquals(linkedListFunction.getX(index), point.x, 1e-9);
+            assertEquals(linkedListFunction.getY(index), point.y, 1e-9);
+            index++;
+        }
+
+        assertEquals(linkedListFunction.getCount()-1, index);
+
     }
 }
