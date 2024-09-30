@@ -269,5 +269,19 @@ public class StrictTabulatedFunctionTests {
         assertEquals(strictTabulatedFunction1.getCount()-1, index1);
         assertEquals(strictTabulatedFunction2.getCount(), index2);
     }
+
+    @Test
+    void testStrictWithUnmodifiable(){
+        double[] xArray = {1.0, 2.0, 4.5, 10.0};
+        double[] yArray = {0.0, 3.0, 2.0, 1.1};
+        UnmodifiableTabulatedFunction unmodifiableTabulatedFunction1 = new UnmodifiableTabulatedFunction(new StrictTabulatedFunction(new LinkedListTabulatedFunction(xArray, yArray)));
+        UnmodifiableTabulatedFunction unmodifiableTabulatedFunction2 = new UnmodifiableTabulatedFunction(new StrictTabulatedFunction(new ArrayTabulatedFunction(xArray, yArray)));
+
+
+        assertThrows(UnsupportedOperationException.class, () -> unmodifiableTabulatedFunction1.apply(0));
+        assertThrows(UnsupportedOperationException.class, () -> unmodifiableTabulatedFunction2.apply(0));
+        assertThrows(UnsupportedOperationException.class, () -> unmodifiableTabulatedFunction1.setY(-3, 1.0));
+        assertThrows(UnsupportedOperationException.class, () -> unmodifiableTabulatedFunction2.setY(-3, 1.0));
+    }
 }
 
