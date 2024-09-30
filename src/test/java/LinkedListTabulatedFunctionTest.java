@@ -299,7 +299,7 @@ public class LinkedListTabulatedFunctionTest {
             index++;
         }
 
-        assertEquals(linkedListFunction.getCount()-1, index);
+        assertEquals(linkedListFunction.getCount(), index);
     }
 
     @Test
@@ -316,7 +316,7 @@ public class LinkedListTabulatedFunctionTest {
             index++;
         }
 
-        assertEquals(linkedListFunction.getCount()-1, index);
+        assertEquals(linkedListFunction.getCount(), index);
 
     }
 }

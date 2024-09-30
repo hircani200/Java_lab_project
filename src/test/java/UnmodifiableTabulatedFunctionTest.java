@@ -143,8 +143,8 @@ public class UnmodifiableTabulatedFunctionTest {
             index++;
         }
 
-        assertEquals(unmodifiableFunction1.getCount()-1, index);
-        assertEquals(unmodifiableFunction2.getCount()-1, index);
+        assertEquals(unmodifiableFunction1.getCount(), index);
+        assertEquals(unmodifiableFunction2.getCount(), index);
     }
 
     @Test

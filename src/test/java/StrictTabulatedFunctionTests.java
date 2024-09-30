@@ -240,8 +240,8 @@ public class StrictTabulatedFunctionTests {
             index++;
         }
 
-        assertEquals(strictTabulatedFunction1.getCount()-1, index);
-        assertEquals(strictTabulatedFunction2.getCount()-1, index);
+        assertEquals(strictTabulatedFunction1.getCount(), index);
+        assertEquals(strictTabulatedFunction2.getCount(), index);
     }
 
     @Test
@@ -266,7 +266,7 @@ public class StrictTabulatedFunctionTests {
             ++index2;
         }
 
-        assertEquals(strictTabulatedFunction1.getCount()-1, index1);
+        assertEquals(strictTabulatedFunction1.getCount(), index1);
         assertEquals(strictTabulatedFunction2.getCount(), index2);
     }
 
