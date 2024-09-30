@@ -1,6 +1,5 @@
 import static org.junit.jupiter.api.Assertions.*;
 
-
 import exceptions.ArrayIsNotSortedException;
 import exceptions.DifferentLengthOfArraysException;
 
