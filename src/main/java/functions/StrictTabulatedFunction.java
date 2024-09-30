@@ -11,6 +11,7 @@ public class StrictTabulatedFunction implements TabulatedFunction, Iterable<Poin
         this.function = function;
     }
 
+
     @Override
     public int getCount() {
         return function.getCount();
