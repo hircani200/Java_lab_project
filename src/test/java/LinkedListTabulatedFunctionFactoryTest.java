@@ -2,7 +2,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import functions.LinkedListTabulatedFunctionFactory;
+import functions.factory.LinkedListTabulatedFunctionFactory;
 import functions.LinkedListTabulatedFunction;
 
 public class LinkedListTabulatedFunctionFactoryTest {

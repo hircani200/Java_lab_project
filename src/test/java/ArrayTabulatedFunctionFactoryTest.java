@@ -2,7 +2,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import functions.ArrayTabulatedFunctionFactory;
+import functions.factory.ArrayTabulatedFunctionFactory;
 import functions.ArrayTabulatedFunction;
 
 public class ArrayTabulatedFunctionFactoryTest {

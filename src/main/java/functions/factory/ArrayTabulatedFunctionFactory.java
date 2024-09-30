@@ -1,6 +1,7 @@
-package functions;
+package functions.factory;
 
-import functions.factory.TabulatedFunctionFactory;
+import functions.ArrayTabulatedFunction;
+import functions.TabulatedFunction;
 
 public class ArrayTabulatedFunctionFactory implements TabulatedFunctionFactory{
     @Override
