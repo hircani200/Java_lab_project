@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TabulatedFunctionOperationServiceTest {
+public class TabulatedFunctionOperationServiceTest {
 
     @Test
     void testAsPointsWithArrayTabulatedFunction() {
