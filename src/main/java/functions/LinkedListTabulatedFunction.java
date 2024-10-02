@@ -184,7 +184,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
             if (x < pointer.next.x) { return pointer; }
             pointer = pointer.next;
         }
-        return head.prev;
+        return pointer;
     }
 
     @Override
@@ -205,17 +205,11 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     @Override
     protected double extrapolateLeft(double x) {
-        if(count == 1) {
-            return (head.y);
-        }
         return interpolate(x, head.x, head.next.x, head.y, head.next.y);
     }
 
     @Override
     protected double extrapolateRight(double x) {
-        if(count == 1) {
-            return (head.y);
-        }
         return interpolate(x, head.prev.prev.x, head.prev.x, head.prev.prev.y, head.prev.y);
     }
 
@@ -237,10 +231,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     @Override
     public void insert(double x, double y) {
-        if (head == null) {
-            addNode(x, y);
-            return;
-        }
         if (x < head.x) {
             Node newNode = new Node(x, y);
             newNode.next = head;

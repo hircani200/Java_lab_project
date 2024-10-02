@@ -106,6 +106,24 @@ public class LinkedListTabulatedFunctionTest {
     }
 
     @Test
+    void testConstructorWithXFromBiggerThanXTo(){
+        MathFunction function = x -> x*x + 2*x + 1;
+        double xFrom = 4.0;
+        double xTo = 1.0;
+        int count = 7;
+
+        LinkedListTabulatedFunction linkedList = new LinkedListTabulatedFunction(function, xFrom, xTo, count);
+
+        double[] rightX = {1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0};
+        double[] rightY = {4.0, 6.25, 9.0, 12.25, 16, 20.25, 25.0};
+
+        for (int i = 0; i < linkedList.getCount(); i++) {
+            assertEquals(rightX[i], linkedList.getX(i), 1e-9);
+            assertEquals(rightY[i], linkedList.getY(i), 1e-9);
+        }
+    }
+
+    @Test
     void testConstructorWithZeroInterval(){
         MathFunction function = x -> x*x + 2*x + 1;
         double xFrom = 1.0;
@@ -145,7 +163,11 @@ public class LinkedListTabulatedFunctionTest {
 
         assertEquals(0, linkedList.indexOfX(1.0));
         assertEquals(2, linkedList.indexOfY(2.0));
+        assertEquals(-1, linkedList.indexOfY(5.0));
         assertEquals(-1, linkedList.indexOfX(0.0));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> linkedList.interpolate(3.5, linkedList.floorNodeOfX(0)));
     }
 
     @Test
@@ -169,6 +191,7 @@ public class LinkedListTabulatedFunctionTest {
         LinkedListTabulatedFunction linkedList = new LinkedListTabulatedFunction(xArray, yArray);
 
         assertEquals(1.263636363, linkedList.apply(9.0), 1e-9);
+        assertEquals(2.6, linkedList.apply(3.0), 1e-9);
     }
 
     @Test
@@ -281,6 +304,10 @@ public class LinkedListTabulatedFunctionTest {
             assertEquals(xNewArray2[i], linkedList.getX(i), 1e-9);
             assertEquals(yNewArray2[i], linkedList.getY(i), 1e-9);
         }
+
+        linkedList.remove(0);
+        assertThrows(IllegalArgumentException.class,
+                () -> linkedList.remove(0));
     }
 
     @Test
