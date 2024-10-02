@@ -84,6 +84,48 @@ public class TabulatedFunctionOperationServiceTest {
     }
 
     @Test
+    public void testMultiplyWithDifferentFactories() {
+        TabulatedFunctionFactory arrayFactory = new ArrayTabulatedFunctionFactory();
+        TabulatedFunctionFactory linkedListFactory = new LinkedListTabulatedFunctionFactory();
+        TabulatedFunctionOperationService service = new TabulatedFunctionOperationService(arrayFactory);
+
+        double[] xValues = {1.0, 2.0, 3.0};
+        double[] yValues1 = {5.0, 6.0, 7.0};
+        double[] yValues2 = {1.0, 2.0, 3.0};
+
+        TabulatedFunction f1 = arrayFactory.create(xValues, yValues1);
+        TabulatedFunction f2 = linkedListFactory.create(xValues, yValues2);
+
+        TabulatedFunction result = service.multiply(f1, f2);
+        double[] expectedY = {5.0, 12.0, 21.0};
+
+        for (int i = 0; i < result.getCount(); i++) {
+            assertEquals(expectedY[i], result.getY(i));
+        }
+    }
+
+    @Test
+    public void testDivisionWithDifferentFactories() {
+        TabulatedFunctionFactory arrayFactory = new ArrayTabulatedFunctionFactory();
+        TabulatedFunctionFactory linkedListFactory = new LinkedListTabulatedFunctionFactory();
+        TabulatedFunctionOperationService service = new TabulatedFunctionOperationService(arrayFactory);
+
+        double[] xValues = {1.0, 2.0, 3.0};
+        double[] yValues1 = {5.0, 6.0, 6.0};
+        double[] yValues2 = {1.0, 2.0, 3.0};
+
+        TabulatedFunction f1 = arrayFactory.create(xValues, yValues1);
+        TabulatedFunction f2 = linkedListFactory.create(xValues, yValues2);
+
+        TabulatedFunction result = service.division(f1, f2);
+        double[] expectedY = {5.0, 3.0, 2.0};
+
+        for (int i = 0; i < result.getCount(); i++) {
+            assertEquals(expectedY[i], result.getY(i));
+        }
+    }
+
+    @Test
     public void testInconsistentFunctionsExceptionWhenDifferentLengths() {
         TabulatedFunctionFactory factory = new ArrayTabulatedFunctionFactory();
         TabulatedFunctionOperationService service = new TabulatedFunctionOperationService(factory);
