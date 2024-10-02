@@ -164,15 +164,8 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     @Override
     protected int floorIndexOfX(double x) {
-        if (x < head.x) {
-            throw new IllegalArgumentException("Lesser than left left bound");
-        }
-        Node pointer = head;
-        for (int i = 0; i < count; i++) {
-            if (x < pointer.next.x) { return i - 1; }
-            pointer = pointer.next;
-        }
-        return count;
+        // Тк есть более лучшая версия метода - floorNpdeOFX
+        throw new UnsupportedOperationException();
     }
 
     public Node floorNodeOfX(double x) {
@@ -181,7 +174,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         }
         Node pointer = head;
         for (int i = 0; i < count; i++) {
-            if (x < pointer.next.x) { return pointer; }
+            if (x < pointer.next.x) { break; }
             pointer = pointer.next;
         }
         return pointer;
