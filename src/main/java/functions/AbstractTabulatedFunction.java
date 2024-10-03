@@ -7,6 +7,13 @@ public abstract class AbstractTabulatedFunction implements TabulatedFunction {
 
     protected int count;
 
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder(getClass().getSimpleName() + " size = " + this.count + "\n");
+        for (Point point : this) stringBuilder.append("[").append(point.x).append("; ").append(point.y).append("]\n");
+        return stringBuilder.toString();
+    }
+
     protected abstract int floorIndexOfX(double x);
 
     // Линейная интерполяция в пределах таблицы
