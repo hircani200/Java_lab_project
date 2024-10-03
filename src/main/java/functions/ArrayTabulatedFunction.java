@@ -1,12 +1,18 @@
 package functions;
 
 import exceptions.InterpolationException;
+
+import java.io.Serial;
 import java.util.NoSuchElementException;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.lang.Iterable;
+import java.io.Serializable;
 
-public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Removable, Insertable, Iterable<Point> {
+public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Removable, Insertable, Iterable<Point>, Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 0x99ab18f6b0c44682L;
 
     protected double[] xValues;
     protected double[] yValues;
@@ -232,4 +238,5 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
             }
         };
     }
+
 }

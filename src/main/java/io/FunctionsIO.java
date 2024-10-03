@@ -1,9 +1,6 @@
 package io;
 
-import java.io.BufferedWriter;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
@@ -49,5 +46,13 @@ public final class FunctionsIO {
         } catch (IOException | NumberFormatException e) {
             throw new IOException(e);
         }
+    }
+
+    public static void serialize(BufferedOutputStream stream, TabulatedFunction function) throws IOException {
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(stream);
+
+        objectOutputStream.writeObject(function);
+
+        objectOutputStream.flush();
     }
 }
