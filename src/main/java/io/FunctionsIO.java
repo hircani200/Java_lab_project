@@ -1,18 +1,12 @@
 package io;
 
-import java.io.BufferedWriter;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
 import functions.TabulatedFunction;
 import functions.Point;
 import functions.factory.TabulatedFunctionFactory;
-
-import java.io.BufferedOutputStream;
-import java.io.DataOutputStream;
 
 public final class FunctionsIO {
     private FunctionsIO() {
@@ -64,4 +58,18 @@ public final class FunctionsIO {
         dataOutputStream.flush();
     }
 
+    static TabulatedFunction readTabulatedFunction(BufferedInputStream inputStream, TabulatedFunctionFactory factory) throws IOException {
+        DataInputStream dataInputStream = new DataInputStream(inputStream);
+
+        int count = dataInputStream.readInt();
+        double[] xValues = new double[count];
+        double[] yValues = new double[count];
+
+        for (int i = 0; i < count; i++) {
+            xValues[i] = dataInputStream.readDouble();
+            yValues[i] = dataInputStream.readDouble();
+        }
+
+        return factory.create(xValues, yValues);
+    }
 }
