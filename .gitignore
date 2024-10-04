@@ -8,6 +8,7 @@
 # User-specific stuff
 input
 output
+temp/temp.bin
 target
 target/classes
 target/test-classes
