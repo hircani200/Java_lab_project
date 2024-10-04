@@ -3,7 +3,10 @@ package functions;
 import exceptions.ArrayIsNotSortedException;
 import exceptions.DifferentLengthOfArraysException;
 
-public abstract class AbstractTabulatedFunction implements TabulatedFunction {
+import java.io.Serializable;
+
+
+public abstract class AbstractTabulatedFunction implements TabulatedFunction, Serializable {
 
     protected int count;
 
