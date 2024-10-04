@@ -10,7 +10,6 @@ public abstract class AbstractTabulatedFunction implements TabulatedFunction, Se
 
     @Serial
     private static final long serialVersionUID = -6984715236368532189L;
-
     protected int count;
 
     @Override
