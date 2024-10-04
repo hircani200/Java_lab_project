@@ -3,6 +3,7 @@ package io;
 import functions.TabulatedFunction;
 import functions.factory.ArrayTabulatedFunctionFactory;
 import functions.factory.LinkedListTabulatedFunctionFactory;
+import operations.TabulatedDifferentialOperator;
 
 import java.io.*;
 
@@ -19,10 +20,9 @@ public class TabulatedFunctionFileInputStream {
 
         System.out.println("Введите размер и значения функции: ");
         try{
-            BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
-            TabulatedFunction consoleFunction = readTabulatedFunction(consoleReader, new LinkedListTabulatedFunctionFactory());
+            TabulatedFunction consoleFunction = readTabulatedFunction(new BufferedReader(new InputStreamReader(System.in)), new LinkedListTabulatedFunctionFactory());
 
-            System.out.println(consoleFunction.toString());
+            System.out.println(new TabulatedDifferentialOperator(new LinkedListTabulatedFunctionFactory()).derive(consoleFunction).toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
