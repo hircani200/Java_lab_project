@@ -4,6 +4,8 @@ import java.io.*;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import functions.TabulatedFunction;
 import functions.Point;
 import functions.factory.TabulatedFunctionFactory;
@@ -111,5 +113,16 @@ public final class FunctionsIO {
         });
 
         return (ArrayTabulatedFunction) xstream.fromXML(reader);
+    }
+
+    public static void serializeJson(BufferedWriter writer, ArrayTabulatedFunction function) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        writer.write(objectMapper.writeValueAsString(function));
+        writer.flush();
+    }
+
+    public static ArrayTabulatedFunction deserializeJson(BufferedReader reader) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return (ArrayTabulatedFunction) objectMapper.readerFor(ArrayTabulatedFunction.class).readValue(reader);
     }
 }

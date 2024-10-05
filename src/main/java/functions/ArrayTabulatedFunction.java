@@ -1,5 +1,8 @@
 package functions;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import exceptions.InterpolationException;
 
 import java.io.Serial;
@@ -14,16 +17,20 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     @Serial
     private static final long serialVersionUID = 0x99ab18f6b0c44682L;
 
+    @JsonFormat(shape = JsonFormat.Shape.ARRAY)
     protected double[] xValues;
+    @JsonFormat(shape = JsonFormat.Shape.ARRAY)
     protected double[] yValues;
 
-    public ArrayTabulatedFunction(double[] xValues, double[] yValues) {
+    @JsonCreator
+    public ArrayTabulatedFunction(@JsonProperty(value = "xvalues") double[] xValues, @JsonProperty(value = "yvalues") double[] yValues) {
         AbstractTabulatedFunction.checkLengthIsTheSame(xValues, yValues);
         AbstractTabulatedFunction.checkSorted(xValues);
 
         if (xValues.length < 2) {
             throw new IllegalArgumentException("The size must be at least 2");
         }
+
 
         this.xValues = Arrays.copyOf(xValues, xValues.length);
         this.yValues = Arrays.copyOf(yValues, yValues.length);

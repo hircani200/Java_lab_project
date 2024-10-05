@@ -33,6 +33,7 @@ class FunctionsIOTest {
     }
 
 
+
     @Test
     public void testWriteAndReadTabulatedFunction() throws IOException {
         Path tempFile = TEMP_DIR.resolve("test_function.txt");
@@ -96,6 +97,30 @@ class FunctionsIOTest {
         TabulatedFunction readFunction;
         try (BufferedInputStream bis = new BufferedInputStream(Files.newInputStream(tempFile))) {
             readFunction = FunctionsIO.readTabulatedFunction(bis, ArrayTabulatedFunction::new);
+        }
+
+        assertEquals(function.getCount(), readFunction.getCount());
+        for (int i = 0; i < function.getCount(); i++) {
+            assertEquals(function.getX(i), readFunction.getX(i), 1e-9);
+            assertEquals(function.getY(i), readFunction.getY(i), 1e-9);
+        }
+    }
+
+    @Test
+    public void testJsonSerializeAndDeserializeFunction() throws IOException {
+        Path tempFile = TEMP_DIR.resolve("test_function.txt");
+
+        double[] xValues = {1.0, 2.0, 3.0};
+        double[] yValues = {1.0, 4.0, 9.0};
+        ArrayTabulatedFunction function = new ArrayTabulatedFunction(xValues, yValues);
+
+        try (BufferedWriter writer = Files.newBufferedWriter(tempFile)) {
+            FunctionsIO.serializeJson(writer, function);
+        }
+
+        TabulatedFunction readFunction;
+        try (BufferedReader reader = Files.newBufferedReader(tempFile)) {
+            readFunction = FunctionsIO.deserializeJson(reader);
         }
 
         assertEquals(function.getCount(), readFunction.getCount());
