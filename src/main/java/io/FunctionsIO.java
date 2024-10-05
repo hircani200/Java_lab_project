@@ -7,6 +7,13 @@ import java.util.Locale;
 import functions.TabulatedFunction;
 import functions.Point;
 import functions.factory.TabulatedFunctionFactory;
+import com.thoughtworks.xstream.security.NoTypePermission;
+import com.thoughtworks.xstream.security.AnyTypePermission;
+import com.thoughtworks.xstream.XStream;
+import java.io.BufferedWriter;
+import java.io.BufferedReader;
+import java.io.IOException;
+import functions.ArrayTabulatedFunction;
 
 public final class FunctionsIO {
     private FunctionsIO() {
@@ -85,5 +92,25 @@ public final class FunctionsIO {
         ObjectInputStream objectInputStream = new ObjectInputStream(stream);
         Object function = objectInputStream.readObject();
         return (TabulatedFunction) function;
+    }
+
+    public static void serializeXml(BufferedWriter writer, ArrayTabulatedFunction function) throws IOException {
+        XStream xstream = new XStream();
+        String xml = xstream.toXML(function);
+        writer.write(xml);
+        writer.flush();
+    }
+
+    public static ArrayTabulatedFunction deserializeXml(BufferedReader reader) {
+        XStream xstream = new XStream();
+
+        xstream.addPermission(NoTypePermission.NONE);
+        xstream.allowTypes(new Class[] {
+                ArrayTabulatedFunction.class,
+                double[].class,
+                Double.class
+        });
+
+        return (ArrayTabulatedFunction) xstream.fromXML(reader);
     }
 }

@@ -80,6 +80,14 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         yValues[index] = value;
     }
 
+    public double[] getXValues() {
+        return this.xValues;
+    }
+
+    public double[] getYValues() {
+        return this.yValues;
+    }
+
     @Override
     public int indexOfX(double x) {
         for (int i = 0; i < count; i++) {

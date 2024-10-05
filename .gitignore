@@ -8,6 +8,7 @@
 # User-specific stuff
 input
 output
+function.xml
 temp/temp.bin
 target
 target/classes
