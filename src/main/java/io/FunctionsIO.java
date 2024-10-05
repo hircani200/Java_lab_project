@@ -8,7 +8,6 @@ import functions.TabulatedFunction;
 import functions.Point;
 import functions.factory.TabulatedFunctionFactory;
 import com.thoughtworks.xstream.security.NoTypePermission;
-import com.thoughtworks.xstream.security.AnyTypePermission;
 import com.thoughtworks.xstream.XStream;
 import java.io.BufferedWriter;
 import java.io.BufferedReader;
@@ -55,7 +54,7 @@ public final class FunctionsIO {
         }
     }
 
-    static void writeTabulatedFunction(BufferedOutputStream outputStream, TabulatedFunction function) throws IOException {
+    public static void writeTabulatedFunction(BufferedOutputStream outputStream, TabulatedFunction function) throws IOException {
         DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
         dataOutputStream.writeInt(function.getCount());
         for (Point point : function){
@@ -65,7 +64,7 @@ public final class FunctionsIO {
         dataOutputStream.flush();
     }
 
-    static TabulatedFunction readTabulatedFunction(BufferedInputStream inputStream, TabulatedFunctionFactory factory) throws IOException {
+    public static TabulatedFunction readTabulatedFunction(BufferedInputStream inputStream, TabulatedFunctionFactory factory) throws IOException {
         DataInputStream dataInputStream = new DataInputStream(inputStream);
 
         int count = dataInputStream.readInt();

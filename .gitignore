@@ -10,6 +10,7 @@ input
 output
 function.xml
 temp/temp.bin
+temp
 target
 target/classes
 target/test-classes
