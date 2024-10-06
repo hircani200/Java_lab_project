@@ -2,8 +2,10 @@ package concurrent;
 
 import functions.Point;
 import functions.TabulatedFunction;
+import operations.TabulatedFunctionOperationService;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class SynchronizedTabulatedFunction implements TabulatedFunction {
 
@@ -79,7 +81,26 @@ public class SynchronizedTabulatedFunction implements TabulatedFunction {
     @Override
     public Iterator<Point> iterator() {
         synchronized (tabulatedFunction) {
-            return this.tabulatedFunction.iterator();
+            Point[] points = TabulatedFunctionOperationService.asPoints(this.tabulatedFunction);
+
+            return new Iterator<>() {
+                private int i = 0;
+
+                @Override
+                public boolean hasNext() {
+                    return i < getCount();
+                }
+
+                @Override
+                public Point next() {
+                    if (!hasNext()) {
+                        throw new NoSuchElementException();
+                    }
+                    Point point = new Point(points[i].x, points[i].y);
+                    i++;
+                    return point;
+                }
+            };
         }
     }
 }
