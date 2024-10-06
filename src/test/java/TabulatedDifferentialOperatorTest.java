@@ -1,5 +1,6 @@
 import static org.junit.jupiter.api.Assertions.*;
 
+import concurrent.SynchronizedTabulatedFunction;
 import functions.TabulatedFunction;
 import org.junit.jupiter.api.Test;
 
@@ -118,5 +119,62 @@ public class TabulatedDifferentialOperatorTest {
             assertEquals(xValues[i], function.getX(i));
             assertEquals(yValues[i], function.getY(i), maxEpsilon);
         }
+    }
+    @Test
+    public void testDeriveSynchronouslyOnSimpleFunction() {
+        double[] xValues = {1.0, 2.0, 3.0, 4.0};
+        double[] yValues = {2.0, 4.0, 6.0, 8.0};
+
+        TabulatedFunction function = new ArrayTabulatedFunctionFactory().create(xValues, yValues);
+        TabulatedDifferentialOperator operator = new TabulatedDifferentialOperator(new ArrayTabulatedFunctionFactory());
+
+        TabulatedFunction derivedFunction = operator.deriveSynchronously(function);
+
+        for (int i = 0; i < derivedFunction.getCount(); i++) {
+            assertEquals(2.0, derivedFunction.getY(i));
+        }
+    }
+
+    @Test
+    public void testDeriveSynchronouslyOnNonLinearFunction() {
+        double[] xValues = {1.0, 2.0, 3.0, 4.0};
+        double[] yValues = {1.0, 4.0, 9.0, 16.0};
+
+        TabulatedFunction function = new ArrayTabulatedFunctionFactory().create(xValues, yValues);
+        TabulatedDifferentialOperator operator = new TabulatedDifferentialOperator(new ArrayTabulatedFunctionFactory());
+
+        TabulatedFunction derivedFunction = operator.deriveSynchronously(function);
+
+        assertEquals(3.0, derivedFunction.getY(0), 1e-5);
+        assertEquals(5.0, derivedFunction.getY(1), 1e-5);
+        assertEquals(7.0, derivedFunction.getY(2), 1e-5);
+    }
+
+    @Test
+    public void testDeriveSynchronouslyWithAlreadySynchronizedFunction() {
+        double[] xValues = {1.0, 2.0, 3.0, 4.0};
+        double[] yValues = {2.0, 4.0, 6.0, 8.0};
+
+        TabulatedFunction function = new SynchronizedTabulatedFunction(new ArrayTabulatedFunctionFactory().create(xValues, yValues));
+        TabulatedDifferentialOperator operator = new TabulatedDifferentialOperator(new ArrayTabulatedFunctionFactory());
+
+        TabulatedFunction derivedFunction = operator.deriveSynchronously(function);
+
+        for (int i = 0; i < derivedFunction.getCount(); i++) {
+            assertEquals(2.0, derivedFunction.getY(i));
+        }
+    }
+
+    @Test
+    public void testDeriveSynchronouslyOnSmallDataSet() {
+        double[] xValues = {1.0, 2.0};
+        double[] yValues = {3.0, 7.0};
+
+        TabulatedFunction function = new ArrayTabulatedFunctionFactory().create(xValues, yValues);
+        TabulatedDifferentialOperator operator = new TabulatedDifferentialOperator(new ArrayTabulatedFunctionFactory());
+
+        TabulatedFunction derivedFunction = operator.deriveSynchronously(function);
+
+        assertEquals(4.0, derivedFunction.getY(0), 1e-5);
     }
 }

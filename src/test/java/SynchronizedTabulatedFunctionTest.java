@@ -256,4 +256,73 @@ public class SynchronizedTabulatedFunctionTest {
         assertEquals(synchronizedTabulatedFunction1.getCount(), index1);
         assertEquals(synchronizedTabulatedFunction2.getCount(), index2);
     }
+
+    @Test
+    public void testGetCountSynchronously() {
+        double[] xValues = {1.0, 2.0, 3.0, 4.0};
+        double[] yValues = {2.0, 4.0, 6.0, 8.0};
+
+        SynchronizedTabulatedFunction syncFunction = new SynchronizedTabulatedFunction(new ArrayTabulatedFunction(xValues, yValues));
+
+        Integer count = syncFunction.doSynchronously(SynchronizedTabulatedFunction::getCount);
+        assertEquals(4, count);
+    }
+
+    @Test
+    public void testSetYSynchronously() {
+        double[] xValues = {1.0, 2.0, 3.0, 4.0};
+        double[] yValues = {2.0, 4.0, 6.0, 8.0};
+
+        SynchronizedTabulatedFunction syncFunction = new SynchronizedTabulatedFunction(new ArrayTabulatedFunction(xValues, yValues));
+
+        syncFunction.doSynchronously(f -> {
+            f.setY(1, 10);
+            return null;
+        });
+
+        assertEquals(10, syncFunction.getY(1));
+    }
+
+    @Test
+    public void testGetXSynchronously() {
+        double[] xValues = {1.0, 2.0, 3.0, 4.0};
+        double[] yValues = {2.0, 4.0, 6.0, 8.0};
+
+        SynchronizedTabulatedFunction syncFunction = new SynchronizedTabulatedFunction(new ArrayTabulatedFunction(xValues, yValues));
+
+        Double xValue = syncFunction.doSynchronously(f -> f.getX(2));
+        assertEquals(3.0, xValue);
+    }
+
+    @Test
+    public void testVoidOperationSynchronously() {
+        double[] xValues = {1.0, 2.0, 3.0, 4.0};
+        double[] yValues = {2.0, 4.0, 6.0, 8.0};
+
+        SynchronizedTabulatedFunction syncFunction = new SynchronizedTabulatedFunction(new ArrayTabulatedFunction(xValues, yValues));
+
+        syncFunction.doSynchronously(f -> {
+            f.setY(3, 12);
+            return null;  // Используем Void-тип
+        });
+
+        assertEquals(12, syncFunction.getY(3));
+    }
+
+    @Test
+    public void testMultipleOperationsSynchronously() {
+        double[] xValues = {1.0, 2.0, 3.0, 4.0};
+        double[] yValues = {2.0, 4.0, 6.0, 8.0};
+
+        SynchronizedTabulatedFunction syncFunction = new SynchronizedTabulatedFunction(new ArrayTabulatedFunction(xValues, yValues));
+
+        Double result = syncFunction.doSynchronously(f -> {
+            f.setY(0, 20);
+            return f.getY(0);
+        });
+
+        assertEquals(20, result);
+        assertEquals(20, syncFunction.getY(0));
+    }
 }
+

@@ -103,4 +103,13 @@ public class SynchronizedTabulatedFunction implements TabulatedFunction {
             };
         }
     }
+    public interface Operation<T> {
+        T apply(SynchronizedTabulatedFunction function);
+    }
+
+    public <T> T doSynchronously(Operation<? extends T> operation) {
+        synchronized (tabulatedFunction) {
+            return operation.apply(this);
+        }
+    }
 }
