@@ -19,4 +19,5 @@ public class WriteTask implements Runnable{
             System.out.printf("Writing for index %d complete\n", i);
         }
     }
+
 }
