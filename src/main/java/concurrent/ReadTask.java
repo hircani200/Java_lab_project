@@ -16,4 +16,5 @@ public class ReadTask implements Runnable{
             System.out.printf("After read: i = %d, x = %f, y = %f \n", i, this.function.getX(i), this.function.getY(i));
         }
     }
+
 }
