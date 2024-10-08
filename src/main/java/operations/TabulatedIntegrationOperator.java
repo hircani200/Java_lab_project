@@ -3,7 +3,6 @@ package operations;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
-
 import concurrent.IntegrationTask;
 import functions.MathFunction;
 import functions.TabulatedFunction;
@@ -13,7 +12,7 @@ public class TabulatedIntegrationOperator implements MathFunction {
     private final int numberOfThreads;
 
     public TabulatedIntegrationOperator() {
-        this.numberOfThreads = Runtime.getRuntime().availableProcessors()-1;
+        this.numberOfThreads = Runtime.getRuntime().availableProcessors() - 1;
         this.executor = Executors.newFixedThreadPool(numberOfThreads);
     }
 
@@ -22,25 +21,19 @@ public class TabulatedIntegrationOperator implements MathFunction {
         this.executor = Executors.newFixedThreadPool(numberOfThreads);
     }
 
-    public TabulatedIntegrationOperator(ExecutorService executor, int numberOfThreads){
-        this.executor = executor;
-        this.numberOfThreads = numberOfThreads;
-    }
-
     public double integrate(TabulatedFunction function) throws ExecutionException, InterruptedException {
-
-        double deltaX = (function.rightBound() - function.leftBound())/numberOfThreads;
+        double deltaX = (function.rightBound() - function.leftBound()) / numberOfThreads;
         double sumOfTrapezoids = 0;
         List<Future<Double>> futureList = new ArrayList<>();
 
-        for(int i = 0; i < numberOfThreads; i++){
+        for (int i = 0; i < numberOfThreads; i++) {
             double lower = function.leftBound() + i * deltaX;
             double upper = lower + deltaX;
-            IntegrationTask trapezoid = new IntegrationTask(function, lower, upper);
-            futureList.add(executor.submit(trapezoid));
+            IntegrationTask task = new IntegrationTask(function, lower, upper);
+            futureList.add(executor.submit(task));
         }
 
-        for(Future<Double> point : futureList){
+        for (Future<Double> point : futureList) {
             sumOfTrapezoids += point.get();
         }
 
@@ -52,7 +45,7 @@ public class TabulatedIntegrationOperator implements MathFunction {
         throw new UnsupportedOperationException();
     }
 
-    public void shutdown(){
+    public void shutdown() {
         executor.shutdown();
     }
 }
