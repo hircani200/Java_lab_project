@@ -1,15 +1,16 @@
+package operations;
+
 import functions.SqrFunction;
 import functions.MathFunction;
-import operations.MiddleSteppingDifferentialOperator;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class MiddleSteppingDifferentialOperatorTest {
+public class RightSteppingDifferentialOperatorTest {
 
     @Test
     public void testRightDerivativeForSqrFunction() {
         double step = 1e-5;
-        MiddleSteppingDifferentialOperator function = new MiddleSteppingDifferentialOperator(step);
+        RightSteppingDifferentialOperator function = new RightSteppingDifferentialOperator(step);
         MathFunction function1 = function.derive(new SqrFunction());
         assertEquals(4.0, function1.apply(2.0), 1e-3);
         assertEquals(-4.0, function1.apply(-2.0), 1e-3);
@@ -20,9 +21,9 @@ public class MiddleSteppingDifferentialOperatorTest {
 
     @Test
     public void testInvalidStepThrowsException() {
-        assertThrows(IllegalArgumentException.class, () -> new MiddleSteppingDifferentialOperator(0));
-        assertThrows(IllegalArgumentException.class, () -> new MiddleSteppingDifferentialOperator(-1));
-        assertThrows(IllegalArgumentException.class, () -> new MiddleSteppingDifferentialOperator(Double.POSITIVE_INFINITY));
-        assertThrows(IllegalArgumentException.class, () -> new MiddleSteppingDifferentialOperator(Double.NaN));
+        assertThrows(IllegalArgumentException.class, () -> new RightSteppingDifferentialOperator(0));
+        assertThrows(IllegalArgumentException.class, () -> new RightSteppingDifferentialOperator(-1));
+        assertThrows(IllegalArgumentException.class, () -> new RightSteppingDifferentialOperator(Double.POSITIVE_INFINITY));
+        assertThrows(IllegalArgumentException.class, () -> new RightSteppingDifferentialOperator(Double.NaN));
     }
 }

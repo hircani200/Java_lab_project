@@ -1,10 +1,12 @@
-import functions.factory.*;
+package functions.factory;
+
 import functions.UnmodifiableTabulatedFunction;
 import exceptions.ArrayIsNotSortedException;
 import functions.TabulatedFunction;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 public class TabulatedFunctionFactoryTest {
     @Test
     public void testCreateUnmodifiable() {

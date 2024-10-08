@@ -1,13 +1,13 @@
+package functions;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import functions.ArrayTabulatedFunction;
-import functions.MathFunction;
 import exceptions.DifferentLengthOfArraysException;
 import exceptions.InterpolationException;
 import exceptions.ArrayIsNotSortedException;
 import java.util.Iterator;
-import functions.Point;
+
 import org.junit.jupiter.api.Test;
 
 class ArrayTabulatedFunctionTest {

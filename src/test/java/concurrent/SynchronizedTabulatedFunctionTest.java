@@ -1,4 +1,5 @@
-import concurrent.SynchronizedTabulatedFunction;
+package concurrent;
+
 import exceptions.ArrayIsNotSortedException;
 import exceptions.DifferentLengthOfArraysException;
 import functions.*;

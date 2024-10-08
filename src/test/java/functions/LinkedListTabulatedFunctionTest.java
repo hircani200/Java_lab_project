@@ -1,3 +1,5 @@
+package functions;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import exceptions.ArrayIsNotSortedException;
@@ -5,9 +7,6 @@ import exceptions.InterpolationException;
 import exceptions.DifferentLengthOfArraysException;
 import org.junit.jupiter.api.Test;
 
-import functions.LinkedListTabulatedFunction;
-import functions.MathFunction;
-import functions.Point;
 import java.util.Iterator;
 
 

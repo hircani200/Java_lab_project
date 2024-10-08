@@ -1,7 +1,8 @@
+package operations;
+
 import functions.ArrayTabulatedFunction;
 import functions.Point;
 import functions.LinkedListTabulatedFunction;
-import operations.TabulatedFunctionOperationService;
 import exceptions.InconsistentFunctionsException;
 import functions.factory.*;
 import functions.TabulatedFunction;

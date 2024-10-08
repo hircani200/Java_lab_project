@@ -1,3 +1,5 @@
+package operations;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import concurrent.SynchronizedTabulatedFunction;
@@ -6,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import functions.ArrayTabulatedFunction;
 import functions.LinkedListTabulatedFunction;
-import operations.TabulatedDifferentialOperator;
 import functions.factory.*;
 
 public class TabulatedDifferentialOperatorTest {

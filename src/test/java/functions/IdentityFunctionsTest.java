@@ -1,6 +1,6 @@
-import static org.junit.jupiter.api.Assertions.assertEquals;
+package functions;
 
-import functions.IdentityFunctions;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 

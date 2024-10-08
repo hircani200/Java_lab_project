@@ -1,5 +1,5 @@
-import concurrent.IntegrationTask;
-import concurrent.IntegrationTaskExecutor;
+package concurrent;
+
 import functions.ArrayTabulatedFunction;
 import functions.LinkedListTabulatedFunction;
 import org.junit.jupiter.api.AfterEach;

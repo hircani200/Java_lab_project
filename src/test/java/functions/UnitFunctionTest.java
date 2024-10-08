@@ -1,6 +1,7 @@
+package functions;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import functions.UnitFunction;
 import org.junit.jupiter.api.Test;
 
 public class UnitFunctionTest {

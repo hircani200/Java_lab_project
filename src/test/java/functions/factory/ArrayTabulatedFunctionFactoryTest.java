@@ -1,10 +1,11 @@
+package functions.factory;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import functions.StrictTabulatedFunction;
 import functions.TabulatedFunction;
 import org.junit.jupiter.api.Test;
 
-import functions.factory.ArrayTabulatedFunctionFactory;
 import functions.ArrayTabulatedFunction;
 
 public class ArrayTabulatedFunctionFactoryTest {

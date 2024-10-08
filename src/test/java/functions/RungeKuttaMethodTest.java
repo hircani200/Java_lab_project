@@ -1,10 +1,8 @@
+package functions;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-import functions.RungeKuttaMethod;
 import org.junit.jupiter.api.Test;
-
-import java.util.function.BiFunction;
-import functions.SqrFunction;
 
 public class RungeKuttaMethodTest {
     @Test

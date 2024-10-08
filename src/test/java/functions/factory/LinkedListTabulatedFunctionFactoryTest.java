@@ -1,9 +1,10 @@
+package functions.factory;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import functions.TabulatedFunction;
 import org.junit.jupiter.api.Test;
 
-import functions.factory.LinkedListTabulatedFunctionFactory;
 import functions.LinkedListTabulatedFunction;
 import functions.StrictTabulatedFunction;
 

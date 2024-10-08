@@ -1,8 +1,7 @@
+package functions;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import functions.SimpleIterationMethod;
-import functions.MathFunction;
-import functions.SqrFunction;
 import org.junit.jupiter.api.Test;
 
 public class AndThenTest {
