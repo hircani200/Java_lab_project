@@ -26,4 +26,10 @@ public class MiddleSteppingDifferentialOperatorTest {
         assertThrows(IllegalArgumentException.class, () -> new MiddleSteppingDifferentialOperator(Double.POSITIVE_INFINITY));
         assertThrows(IllegalArgumentException.class, () -> new MiddleSteppingDifferentialOperator(Double.NaN));
     }
+
+    @Test
+    public void testApplyThrowsException() {
+        LeftSteppingDifferentialOperator operator = new LeftSteppingDifferentialOperator(0.1);
+        assertThrows(UnsupportedOperationException.class, () -> operator.apply(1.0));
+    }
 }

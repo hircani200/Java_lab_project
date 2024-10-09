@@ -123,6 +123,6 @@ public final class FunctionsIO {
 
     public static ArrayTabulatedFunction deserializeJson(BufferedReader reader) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        return (ArrayTabulatedFunction) objectMapper.readerFor(ArrayTabulatedFunction.class).readValue(reader);
+        return objectMapper.readerFor(ArrayTabulatedFunction.class).readValue(reader);
     }
 }

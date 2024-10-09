@@ -11,7 +11,7 @@ public class RungeKuttaMethodTest {
         SqrFunction sqr = new SqrFunction();
 
         RungeKuttaMethod function1 = new RungeKuttaMethod((x,y) -> x*y, 0, 1);
-        RungeKuttaMethod function2 = new RungeKuttaMethod((x, y) -> x , 1, 0.5);
+        RungeKuttaMethod function2 = new RungeKuttaMethod((x, _) -> x , 1, 0.5);
         RungeKuttaMethod function3 = new RungeKuttaMethod((x, y) -> sqr.apply(x)+ (y), 1, 1);
 
 
@@ -21,10 +21,10 @@ public class RungeKuttaMethodTest {
     }
     @Test
     void testConstructorThrowsException(){
-        assertThrows(IllegalArgumentException.class, () -> new RungeKuttaMethod((x,y) -> 1/x, 0, 2));
+        assertThrows(IllegalArgumentException.class, () -> new RungeKuttaMethod((x, _) -> 1/x, 0, 2));
     }
     @Test
     void testApplyThrowsException(){
-        assertThrows(IllegalArgumentException.class, () -> new RungeKuttaMethod((x,y) -> 1/x, -1, 2).apply(1));
+        assertThrows(IllegalArgumentException.class, () -> new RungeKuttaMethod((x, _) -> 1/x, -1, 2).apply(1));
     }
 }

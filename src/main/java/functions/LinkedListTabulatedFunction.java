@@ -15,7 +15,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     private Node head;
 
-    protected static final class Node implements Serializable{
+    public static final class Node implements Serializable{
         @Serial
         private static final long serialVersionUID = -4660625374525627823L;
 
@@ -173,7 +173,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     @Override
     protected int floorIndexOfX(double x) {
-        // Тк есть более лучшая версия метода - floorNpdeOFX
+        // Тк есть более лучшая версия метода - floorNodeOFX
         throw new UnsupportedOperationException();
     }
 

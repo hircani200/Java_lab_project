@@ -18,7 +18,7 @@ public class TabulatedFunctionFileInputStream {
             e.printStackTrace();
         }
 
-        System.out.println("Введите размер и значения функции: ");
+        System.out.println("Enter the size and values of the function: ");
         try{
             TabulatedFunction consoleFunction = readTabulatedFunction(new BufferedReader(new InputStreamReader(System.in)), new LinkedListTabulatedFunctionFactory());
 
