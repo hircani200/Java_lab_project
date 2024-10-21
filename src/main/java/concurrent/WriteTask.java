@@ -15,8 +15,10 @@ public class WriteTask implements Runnable{
     @Override
     public void run() {
         for (int i = 0; i < this.function.getCount(); i++) {
-            this.function.setY(i, this.value);
-            System.out.printf("Writing for index %d complete\n", i);
+            synchronized (function) {
+                this.function.setY(i, this.value);
+                System.out.printf("Writing for index %d complete\n", i);
+            }
         }
     }
 
