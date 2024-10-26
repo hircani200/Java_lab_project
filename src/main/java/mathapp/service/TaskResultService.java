@@ -31,7 +31,7 @@ public class TaskResultService {
 
     public TaskResultDTO update(TaskResultDTO resultDTO) {
         if (!taskResultRepository.existsById(resultDTO.getResultId())) {
-            return null; // or throw an exception if preferred
+            return null;
         }
         TaskResultEntity resultEntity = toEntity(resultDTO);
         TaskResultEntity updatedResult = taskResultRepository.save(resultEntity);
