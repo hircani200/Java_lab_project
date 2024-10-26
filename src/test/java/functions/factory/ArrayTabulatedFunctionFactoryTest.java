@@ -2,11 +2,12 @@ package functions.factory;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import functions.StrictTabulatedFunction;
-import functions.TabulatedFunction;
+import mathapp.functions.StrictTabulatedFunction;
+import mathapp.functions.TabulatedFunction;
+import mathapp.functions.factory.ArrayTabulatedFunctionFactory;
 import org.junit.jupiter.api.Test;
 
-import functions.ArrayTabulatedFunction;
+import mathapp.functions.ArrayTabulatedFunction;
 
 public class ArrayTabulatedFunctionFactoryTest {
     @Test

@@ -2,11 +2,12 @@ package functions.factory;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import functions.TabulatedFunction;
+import mathapp.functions.TabulatedFunction;
+import mathapp.functions.factory.LinkedListTabulatedFunctionFactory;
 import org.junit.jupiter.api.Test;
 
-import functions.LinkedListTabulatedFunction;
-import functions.StrictTabulatedFunction;
+import mathapp.functions.LinkedListTabulatedFunction;
+import mathapp.functions.StrictTabulatedFunction;
 
 public class LinkedListTabulatedFunctionFactoryTest {
     @Test

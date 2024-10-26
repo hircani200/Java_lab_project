@@ -1,7 +1,8 @@
 package operations;
 
-import functions.SqrFunction;
-import functions.MathFunction;
+import mathapp.functions.SqrFunction;
+import mathapp.functions.MathFunction;
+import mathapp.operations.LeftSteppingDifferentialOperator;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -2,13 +2,15 @@ package operations;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import concurrent.SynchronizedTabulatedFunction;
-import functions.TabulatedFunction;
+import mathapp.concurrent.SynchronizedTabulatedFunction;
+import mathapp.functions.TabulatedFunction;
+import mathapp.functions.factory.ArrayTabulatedFunctionFactory;
+import mathapp.functions.factory.LinkedListTabulatedFunctionFactory;
+import mathapp.operations.TabulatedDifferentialOperator;
 import org.junit.jupiter.api.Test;
 
-import functions.ArrayTabulatedFunction;
-import functions.LinkedListTabulatedFunction;
-import functions.factory.*;
+import mathapp.functions.ArrayTabulatedFunction;
+import mathapp.functions.LinkedListTabulatedFunction;
 
 public class TabulatedDifferentialOperatorTest {
 

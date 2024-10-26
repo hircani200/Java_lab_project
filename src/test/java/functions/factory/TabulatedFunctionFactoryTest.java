@@ -1,8 +1,11 @@
 package functions.factory;
 
-import functions.UnmodifiableTabulatedFunction;
-import exceptions.ArrayIsNotSortedException;
-import functions.TabulatedFunction;
+import mathapp.functions.UnmodifiableTabulatedFunction;
+import mathapp.exceptions.ArrayIsNotSortedException;
+import mathapp.functions.TabulatedFunction;
+import mathapp.functions.factory.ArrayTabulatedFunctionFactory;
+import mathapp.functions.factory.LinkedListTabulatedFunctionFactory;
+import mathapp.functions.factory.TabulatedFunctionFactory;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

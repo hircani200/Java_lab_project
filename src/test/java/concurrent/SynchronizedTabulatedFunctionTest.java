@@ -1,8 +1,12 @@
 package concurrent;
 
-import exceptions.ArrayIsNotSortedException;
-import exceptions.DifferentLengthOfArraysException;
-import functions.*;
+import mathapp.exceptions.ArrayIsNotSortedException;
+import mathapp.exceptions.DifferentLengthOfArraysException;
+import mathapp.concurrent.SynchronizedTabulatedFunction;
+import mathapp.functions.ArrayTabulatedFunction;
+import mathapp.functions.LinkedListTabulatedFunction;
+import mathapp.functions.MathFunction;
+import mathapp.functions.Point;
 import org.junit.jupiter.api.Test;
 
 import java.util.Iterator;

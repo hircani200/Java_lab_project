@@ -2,6 +2,7 @@ package functions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import mathapp.functions.ZeroFunction;
 import org.junit.jupiter.api.Test;
 
 public class ZeroFunctionTest {

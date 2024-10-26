@@ -1,8 +1,9 @@
 package io;
 
+import mathapp.io.FunctionsIO;
 import org.junit.jupiter.api.Test;
 import java.io.*;
-import functions.ArrayTabulatedFunction;
+import mathapp.functions.ArrayTabulatedFunction;
 
 import static org.junit.jupiter.api.Assertions.*;
 

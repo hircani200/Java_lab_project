@@ -2,6 +2,7 @@ package functions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import mathapp.functions.*;
 import org.junit.jupiter.api.Test;
 
 

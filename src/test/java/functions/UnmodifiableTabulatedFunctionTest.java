@@ -3,8 +3,9 @@ package functions;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-import exceptions.ArrayIsNotSortedException;
-import exceptions.DifferentLengthOfArraysException;
+import mathapp.exceptions.ArrayIsNotSortedException;
+import mathapp.exceptions.DifferentLengthOfArraysException;
+import mathapp.functions.*;
 import org.junit.jupiter.api.Test;
 import java.util.Iterator;
 

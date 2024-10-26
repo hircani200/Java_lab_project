@@ -1,7 +1,9 @@
 package concurrent;
 
-import functions.ArrayTabulatedFunction;
-import functions.LinkedListTabulatedFunction;
+import mathapp.functions.ArrayTabulatedFunction;
+import mathapp.functions.LinkedListTabulatedFunction;
+import mathapp.concurrent.IntegrationTask;
+import mathapp.concurrent.IntegrationTaskExecutor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

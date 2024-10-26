@@ -2,9 +2,12 @@ package functions;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import mathapp.functions.AbstractTabulatedFunction;
+import mathapp.functions.ArrayTabulatedFunction;
+import mathapp.functions.LinkedListTabulatedFunction;
 import org.junit.jupiter.api.Test;
-import exceptions.ArrayIsNotSortedException;
-import exceptions.DifferentLengthOfArraysException;
+import mathapp.exceptions.ArrayIsNotSortedException;
+import mathapp.exceptions.DifferentLengthOfArraysException;
 
 public class AbstractTabulatedFunctionTest {
 

@@ -2,6 +2,7 @@ package functions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import mathapp.functions.SqrFunction;
 import org.junit.jupiter.api.Test;
 
 public class SqrFunctionTest {
