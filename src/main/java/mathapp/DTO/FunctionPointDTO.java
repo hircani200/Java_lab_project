@@ -1,12 +1,13 @@
 package mathapp.DTO;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class FunctionPointDTO {
     private Long pointId;
     private Long functionId;
     private Double xValue;
     private Double yValue;
 
-    // Геттеры и сеттеры
     public Long getPointId() {
         return pointId;
     }
@@ -23,6 +24,7 @@ public class FunctionPointDTO {
         this.functionId = functionId;
     }
 
+    @JsonProperty("xValue")
     public Double getXValue() {
         return xValue;
     }
@@ -31,6 +33,7 @@ public class FunctionPointDTO {
         this.xValue = xValue;
     }
 
+    @JsonProperty("yValue")
     public Double getYValue() {
         return yValue;
     }

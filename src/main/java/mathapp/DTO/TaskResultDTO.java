@@ -5,7 +5,6 @@ public class TaskResultDTO {
     private Long taskId;
     private Double result;
 
-    // Getters and setters
     public Long getResultId() {
         return resultId;
     }
