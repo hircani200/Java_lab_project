@@ -60,4 +60,8 @@ public class FunctionService {
         dto.setCount(entity.getCount());
         return dto;
     }
+
+    public List<FunctionEntity> findByName(String name) {
+        return functionRepository.findAll().stream().filter(function -> function.getName().equalsIgnoreCase(name)).collect(Collectors.toList());
+    }
 }

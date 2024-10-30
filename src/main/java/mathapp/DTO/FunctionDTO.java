@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class FunctionDTO {
     private Long  functionId;
-    private String name;
+    private static String name;
     private Double xFrom;
     private Double xTo;
     private Integer count;
@@ -17,7 +17,7 @@ public class FunctionDTO {
         this.functionId = functionId;
     }
 
-    public String getName() {
+    public static String getName() {
         return name;
     }
 
