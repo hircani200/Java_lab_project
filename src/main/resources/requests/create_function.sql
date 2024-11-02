@@ -1,0 +1,1 @@
+INSERT INTO public.functions(function_id, function_name, x_from, x_to, count) VALUES (?, ?, ?, ?, ?);

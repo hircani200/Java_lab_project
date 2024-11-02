@@ -1,0 +1,1 @@
+UPDATE public.functions SET function_name = ?, x_from = ?, x_to = ?, count = ? where function_id = ?;

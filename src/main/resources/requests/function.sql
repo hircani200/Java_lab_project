@@ -1,0 +1,1 @@
+INSERT INTO public.functions(function_id, function_name, x_from, x_to, count) VALUES (1, 'CosFunction', 0.0, 10.0, 5);
