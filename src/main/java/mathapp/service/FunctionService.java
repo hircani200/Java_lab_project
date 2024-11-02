@@ -46,7 +46,7 @@ public class FunctionService {
     private FunctionEntity toEntity(FunctionDTO dto) {
         FunctionEntity entity = new FunctionEntity();
         entity.setFunctionId(dto.getFunctionId());
-        entity.setName(dto.getName());
+        entity.setName(FunctionDTO.getName());
         entity.setXFrom(dto.getXFrom());
         entity.setXTo(dto.getXTo());
         entity.setCount(dto.getCount());
@@ -111,7 +111,7 @@ public class FunctionService {
             if (current.getName().equalsIgnoreCase(targetName)) {
                 result.add(current);
             }
-            queue.addAll(current.getPoints().stream().map(FunctionPointEntity::getFunction).collect(Collectors.toList()));
+            queue.addAll(current.getPoints().stream().map(FunctionPointEntity::getFunction).toList());
         }
         return result;
     }
