@@ -99,13 +99,10 @@ public class FunctionPointService {
 
     public List<FunctionPointDTO> breadthFirstSearch(FunctionEntity function) {
         Set<Long> visited = new HashSet<>();
-        Queue<FunctionPointEntity> queue = new LinkedList<>();
         List<FunctionPointDTO> result = new ArrayList<>();
 
         List<FunctionPointEntity> points = functionPointRepository.findByFunction(function);
-        for (FunctionPointEntity point : points) {
-            queue.add(point);
-        }
+        Queue<FunctionPointEntity> queue = new LinkedList<>(points);
 
         while (!queue.isEmpty()) {
             FunctionPointEntity current = queue.poll();

@@ -94,7 +94,7 @@ public class TaskResultService {
 
         List<TaskResultEntity> results = taskResultRepository.findAll().stream()
                 .filter(result -> result.getTask() != null && result.getTask().getTaskId().equals(taskId))
-                .collect(Collectors.toList());
+                .toList();
 
         return results.stream().map(this::toDTO).collect(Collectors.toList());
     }
