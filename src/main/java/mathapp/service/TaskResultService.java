@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import mathapp.repository.TaskRepository;
 import mathapp.repository.TaskResultRepository;
 
+import java.util.*;
+import java.util.stream.Collectors;
+
 @Service
 public class TaskResultService {
 
@@ -73,5 +76,37 @@ public class TaskResultService {
         dto.setTaskId(entity.getTask() != null ? entity.getTask().getTaskId() : null);
         dto.setResult(entity.getResult());
         return dto;
+    }
+
+    public List<TaskResultDTO> searchByResult(Double resultValue, boolean sortAscending) {
+        List<TaskResultEntity> results = taskResultRepository.findAll().stream()
+                .filter(result -> result.getResult().equals(resultValue))
+                .collect(Collectors.toList());
+
+        return sortAndMap(results, sortAscending);
+    }
+
+    public List<TaskResultDTO> searchByTask(Long taskId) {
+        TaskEntity task = taskRepository.findById(taskId).orElse(null);
+        if (task == null) {
+            return Collections.emptyList();
+        }
+
+        List<TaskResultEntity> results = taskResultRepository.findAll().stream()
+                .filter(result -> result.getTask() != null && result.getTask().getTaskId().equals(taskId))
+                .collect(Collectors.toList());
+
+        return results.stream().map(this::toDTO).collect(Collectors.toList());
+    }
+
+    private List<TaskResultDTO> sortAndMap(List<TaskResultEntity> results, boolean sortAscending) {
+        Comparator<TaskResultEntity> comparator = Comparator.comparing(TaskResultEntity::getResult);
+        if (!sortAscending) {
+            comparator = comparator.reversed();
+        }
+        return results.stream()
+                .sorted(comparator)
+                .map(this::toDTO)
+                .collect(Collectors.toList());
     }
 }
