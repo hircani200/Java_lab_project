@@ -13,6 +13,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>17</java.version> <!-- Specify your Java version here -->
+        <argLine>-XX:+EnableDynamicAgentLoading</argLine>
         <postgresql.version>42.7.2</postgresql.version>
         <spring.boot.version>2.7.5</spring.boot.version> <!-- Use compatible Spring Boot version -->
     </properties>
@@ -137,6 +138,7 @@
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 </project>
