@@ -10,5 +10,4 @@ import java.util.List;
 @Repository
 public interface FunctionPointRepository extends JpaRepository<FunctionPointEntity, Long> {
     List<FunctionPointEntity> findByFunction(FunctionEntity function);
-    List<FunctionEntity> findByNameContainingIgnoreCase(String functionName);
 }

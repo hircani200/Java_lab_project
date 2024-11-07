@@ -1,22 +1,13 @@
-package mathapp.model;
+package mathapp.dto;
 
-import javax.persistence.*;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Entity
-@Table(name = "functions")
-public class FunctionEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long functionId;
-
-    private String type;
+public class FunctionDTO {
+    private Long  functionId;
+    private static String type;
     private Double xFrom;
     private Double xTo;
     private Integer count;
-
-    @OneToMany(mappedBy = "function", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<FunctionPointEntity> points;
 
     public Long getFunctionId() {
         return functionId;
@@ -26,7 +17,7 @@ public class FunctionEntity {
         this.functionId = functionId;
     }
 
-    public String getType() {
+    public static String getType() {
         return type;
     }
 
@@ -34,6 +25,7 @@ public class FunctionEntity {
         this.type = type;
     }
 
+    @JsonProperty("xFrom")
     public Double getXFrom() {
         return xFrom;
     }
@@ -42,6 +34,7 @@ public class FunctionEntity {
         this.xFrom = xFrom;
     }
 
+    @JsonProperty("xTo")
     public Double getXTo() {
         return xTo;
     }
@@ -56,13 +49,5 @@ public class FunctionEntity {
 
     public void setCount(Integer count) {
         this.count = count;
-    }
-
-    public List<FunctionPointEntity> getPoints() {
-        return points;
-    }
-
-    public void setPoints(List<FunctionPointEntity> points) {
-        this.points = points;
     }
 }

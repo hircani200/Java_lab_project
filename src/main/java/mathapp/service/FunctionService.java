@@ -1,8 +1,7 @@
 package mathapp.service;
 
-import mathapp.DTO.FunctionDTO;
+import mathapp.dto.FunctionDTO;
 import mathapp.model.FunctionEntity;
-import mathapp.model.FunctionPointEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import mathapp.repository.FunctionRepository;
@@ -36,8 +35,8 @@ public class FunctionService {
         functionRepository.deleteById(id);
     }
 
-    public List<FunctionDTO> getByName(String name) {
-        return functionRepository.findByName(name)
+    public List<FunctionDTO> getByType(String type) {
+        return functionRepository.findByType(type)
                 .stream()
                 .map(this::toDTO)
                 .collect(Collectors.toList());
@@ -46,7 +45,7 @@ public class FunctionService {
     private FunctionEntity toEntity(FunctionDTO dto) {
         FunctionEntity entity = new FunctionEntity();
         entity.setFunctionId(dto.getFunctionId());
-        entity.setName(FunctionDTO.getName());
+        entity.setType(FunctionDTO.getType());
         entity.setXFrom(dto.getXFrom());
         entity.setXTo(dto.getXTo());
         entity.setCount(dto.getCount());
@@ -56,16 +55,16 @@ public class FunctionService {
     private FunctionDTO toDTO(FunctionEntity entity) {
         FunctionDTO dto = new FunctionDTO();
         dto.setFunctionId(entity.getFunctionId());
-        dto.setName(entity.getName());
+        dto.setType(entity.getType());
         dto.setXFrom(entity.getXFrom());
         dto.setXTo(entity.getXTo());
         dto.setCount(entity.getCount());
         return dto;
     }
 
-    public List<FunctionDTO> searchByName(String name, boolean sortAscending) {
-        List<FunctionEntity> functions = functionRepository.findByNameContainingIgnoreCase(name);
-        Comparator<FunctionEntity> comparator = Comparator.comparing(FunctionEntity::getName);
+    public List<FunctionDTO> searchByType(String type, boolean sortAscending) {
+        List<FunctionEntity> functions = functionRepository.findByTypeContainingIgnoreCase(type);
+        Comparator<FunctionEntity> comparator = Comparator.comparing(FunctionEntity::getType);
         if (!sortAscending) {
             comparator = comparator.reversed();
         }
@@ -90,32 +89,6 @@ public class FunctionService {
                 .collect(Collectors.toList());
     }
 
-    public List<FunctionEntity> depthFirstSearch(FunctionEntity root, String targetName) {
-        List<FunctionEntity> result = new ArrayList<>();
-        if (root.getName().equalsIgnoreCase(targetName)) {
-            result.add(root);
-        }
-        for (FunctionPointEntity point : root.getPoints()) {
-            result.addAll(depthFirstSearch(point.getFunction(), targetName));
-        }
-        return result;
-    }
-
-    public List<FunctionEntity> breadthFirstSearch(FunctionEntity root, String targetName) {
-        List<FunctionEntity> result = new ArrayList<>();
-        Queue<FunctionEntity> queue = new LinkedList<>();
-        queue.add(root);
-
-        while (!queue.isEmpty()) {
-            FunctionEntity current = queue.poll();
-            if (current.getName().equalsIgnoreCase(targetName)) {
-                result.add(current);
-            }
-            queue.addAll(current.getPoints().stream().map(FunctionPointEntity::getFunction).toList());
-        }
-        return result;
-    }
-
     public List<FunctionDTO> sortAndMap(List<FunctionEntity> functions, Function<FunctionEntity, Comparable> keyExtractor, boolean sortAscending) {
         Comparator<FunctionEntity> comparator = Comparator.comparing(keyExtractor);
         if (!sortAscending) {
@@ -127,7 +100,7 @@ public class FunctionService {
                 .collect(Collectors.toList());
     }
 
-    public List<FunctionEntity> findByName(String name) {
-        return functionRepository.findAll().stream().filter(function -> function.getName().equalsIgnoreCase(name)).collect(Collectors.toList());
+    public List<FunctionEntity> findByType(String type) {
+        return functionRepository.findAll().stream().filter(function -> function.getType().equalsIgnoreCase(type)).collect(Collectors.toList());
     }
 }

@@ -1,0 +1,546 @@
+{
+	"info": {
+		"_postman_id": "f4163125-6f78-4d89-9819-b3dcf35a219a",
+		"name": "MathAppTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39293896"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"username\", \"developer\");",
+							"pm.environment.set(\"password\", \"password\");",
+							"pm.environment.set(\"role\", \"DEVELOPER\");",
+							"",
+							"pm.test(\"Response status code is 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response Content-Type is text/plain\", function () {",
+							"  pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"text/plain\");",
+							"});",
+							"",
+							"pm.test(\"Response body is valid JSON\", function () {",
+							"  let jsonData;",
+							"  try {",
+							"    jsonData = pm.response.text();",
+							"    pm.expect(jsonData).to.include(\"User registered successfully!\");",
+							"  } catch (e) {",
+							"    pm.expect.fail(\"Response body is not valid JSON\");",
+							"  }",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"developer\",\n    \"password\": \"password\",\n    \"role\": \"DEVELOPER\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"username\", \"developer\");",
+							"pm.environment.set(\"password\", \"password\");",
+							"",
+							"pm.test(\"Response status code is 200\", function () {",
+							"  pm.expect(pm.response).to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Content-Type header is application/json\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							"let responseData = pm.response.json();",
+							"",
+							"pm.test(\"Token is present in the response\", function () {",
+							"  pm.expect(responseData.token).to.exist;",
+							"});",
+							"",
+							"pm.test(\"Token is a non-empty string\", function () {",
+							"  pm.expect(responseData.token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Token should not be empty\");",
+							"});",
+							"",
+							"pm.environment.set(\"token\", responseData.token);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"developer\",\n    \"password\": \"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post function",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"functionId\", pm.response.json().functionId);",
+							"",
+							"pm.test(\"Response time is less than 500ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the expected Content-Type header\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is less than 500ms\", function () {",
+							"  pm.expect(pm.response.responseTime).to.be.below(500);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkZXZlbG9wZXIiLCJpYXQiOjE3MzA5Nzg3MjEsImV4cCI6MTczMTAxNDcyMX0.CRggz-YveTg6yEZHgGv9Ps47hZBECaB3_j42xrTq9Xr3MwXtgQcgkUJEAztLelz6k6uAg7GVUTldzhs7Idf2kA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"type\": \"Test Function\", \"xFrom\": 0, \"xTo\": 10, \"count\": 100 }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/functions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"functions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get function",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"  pm.expect(pm.response).to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"let responseData = pm.response.json();",
+							"",
+							"pm.test(\"Response has the required fields - functionId, count, xFrom, and xTo\", function () {",
+							"  pm.expect(responseData).to.have.property(\"functionId\");",
+							"  pm.expect(responseData).to.have.property(\"count\");",
+							"  pm.expect(responseData).to.have.property(\"xFrom\");",
+							"  pm.expect(responseData).to.have.property(\"xTo\");",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkZXZlbG9wZXIiLCJpYXQiOjE3MzA5Nzg3MjEsImV4cCI6MTczMTAxNDcyMX0.CRggz-YveTg6yEZHgGv9Ps47hZBECaB3_j42xrTq9Xr3MwXtgQcgkUJEAztLelz6k6uAg7GVUTldzhs7Idf2kA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/functions/{{functionId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"functions",
+						"{{functionId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post point",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"  pm.expect(pm.response).to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Content-Type header is application/json\", function () {",
+							"  pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							"let responseData = pm.response.json();",
+							"",
+							"pm.test(\"Response has the required fields - pointId, functionId, xValue, and yValue\", function () {",
+							"  pm.expect(responseData).to.have.property(\"pointId\");",
+							"  pm.expect(responseData).to.have.property(\"functionId\");",
+							"  pm.expect(responseData).to.have.property(\"xValue\");",
+							"  pm.expect(responseData).to.have.property(\"yValue\");",
+							"});",
+							"",
+							"pm.environment.set(\"pointId\", responseData.pointId);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkZXZlbG9wZXIiLCJpYXQiOjE3MzA5Nzg3MjEsImV4cCI6MTczMTAxNDcyMX0.CRggz-YveTg6yEZHgGv9Ps47hZBECaB3_j42xrTq9Xr3MwXtgQcgkUJEAztLelz6k6uAg7GVUTldzhs7Idf2kA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"functionId\": {{functionId}},\n    \"xValue\": 5.0,\n    \"yValue\": 10.0\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/function_points",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"function_points"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get point",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"  pm.expect(pm.response).to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"let responseData = pm.response.json();",
+							"",
+							"pm.test(\"Response has the required fields - pointId, functionId, xValue, and yValue\", function () {",
+							"  pm.expect(responseData).to.have.property(\"pointId\");",
+							"  pm.expect(responseData).to.have.property(\"functionId\");",
+							"  pm.expect(responseData).to.have.property(\"xValue\");",
+							"  pm.expect(responseData).to.have.property(\"yValue\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkZXZlbG9wZXIiLCJpYXQiOjE3MzA5Nzg3MjEsImV4cCI6MTczMTAxNDcyMX0.CRggz-YveTg6yEZHgGv9Ps47hZBECaB3_j42xrTq9Xr3MwXtgQcgkUJEAztLelz6k6uAg7GVUTldzhs7Idf2kA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/function_points/{{pointId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"function_points",
+						"{{pointId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete point",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"  pm.expect(pm.response).to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkZXZlbG9wZXIiLCJpYXQiOjE3MzA5Nzg3MjEsImV4cCI6MTczMTAxNDcyMX0.CRggz-YveTg6yEZHgGv9Ps47hZBECaB3_j42xrTq9Xr3MwXtgQcgkUJEAztLelz6k6uAg7GVUTldzhs7Idf2kA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/function_points/{{pointId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"function_points",
+						"{{pointId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete function",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"  pm.expect(pm.response).to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is within an acceptable range\", function () {",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkZXZlbG9wZXIiLCJpYXQiOjE3MzA5Nzg3MjEsImV4cCI6MTczMTAxNDcyMX0.CRggz-YveTg6yEZHgGv9Ps47hZBECaB3_j42xrTq9Xr3MwXtgQcgkUJEAztLelz6k6uAg7GVUTldzhs7Idf2kA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/functions/{{functionId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"functions",
+						"{{functionId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"",
+							"pm.test(\"Content-Type is text/plain\", function () {",
+							"  pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"text/plain\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response message is 'User deleted successfully!'\", function () {",
+							"  const responseData = pm.response.text();",
+							"",
+							"  pm.expect(responseData).to.equal(\"User deleted successfully!\");",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkZXZlbG9wZXIiLCJpYXQiOjE3MzA5Nzg3MjEsImV4cCI6MTczMTAxNDcyMX0.CRggz-YveTg6yEZHgGv9Ps47hZBECaB3_j42xrTq9Xr3MwXtgQcgkUJEAztLelz6k6uAg7GVUTldzhs7Idf2kA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/auth/delete/{{username}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"delete",
+						"{{username}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

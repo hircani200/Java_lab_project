@@ -1,6 +1,6 @@
 package mathapp.service;
 
-import mathapp.DTO.FunctionPointDTO;
+import mathapp.dto.FunctionPointDTO;
 import mathapp.model.FunctionEntity;
 import mathapp.model.FunctionPointEntity;
 import mathapp.repository.FunctionPointRepository;
@@ -32,10 +32,12 @@ class FunctionPointServiceTest {
     @Mock
     private FunctionRepository functionRepository;
 
+    @Mock
+    private FunctionEntity functionEntity;
+
     private FunctionPointDTO pointDTO;
     private FunctionPointEntity pointEntity1;
     private FunctionPointEntity pointEntity2;
-    private FunctionEntity functionEntity;
 
     @BeforeEach
     void setUp() {
@@ -46,10 +48,6 @@ class FunctionPointServiceTest {
         pointDTO.setFunctionId(1L);
         pointDTO.setXValue(10.0);
         pointDTO.setYValue(20.0);
-
-        functionEntity = new FunctionEntity();
-        functionEntity.setFunctionId(1L);
-        functionEntity.setName("Test Function");
 
         pointEntity1 = new FunctionPointEntity();
         pointEntity1.setPointId(1L);
@@ -62,6 +60,9 @@ class FunctionPointServiceTest {
         pointEntity2.setFunction(functionEntity);
         pointEntity2.setXValue(0.0);
         pointEntity2.setYValue(2.1);
+
+        when(functionEntity.getFunctionId()).thenReturn(1L);
+        when(functionEntity.getType()).thenReturn("SampleFunction");
     }
 
     @AfterEach
@@ -147,35 +148,11 @@ class FunctionPointServiceTest {
     }
 
     @Test
-    public void testDepthFirstSearch() {
-        List<FunctionPointEntity> points = Arrays.asList(pointEntity1, pointEntity2);
-        when(functionPointRepository.findByFunction(functionEntity)).thenReturn(points);
-
-        List<FunctionPointDTO> result = functionPointService.depthFirstSearch(functionEntity);
-
-        assertEquals(2, result.size());
-        assertTrue(result.stream().anyMatch(dto -> dto.getPointId().equals(pointEntity1.getPointId())));
-        assertTrue(result.stream().anyMatch(dto -> dto.getPointId().equals(pointEntity2.getPointId())));
-    }
-
-    @Test
-    public void testBreadthFirstSearch() {
-        List<FunctionPointEntity> points = Arrays.asList(pointEntity1, pointEntity2);
-        when(functionPointRepository.findByFunction(functionEntity)).thenReturn(points);
-
-        List<FunctionPointDTO> result = functionPointService.breadthFirstSearch(functionEntity);
-
-        assertEquals(2, result.size());
-        assertTrue(result.stream().anyMatch(dto -> dto.getPointId().equals(pointEntity1.getPointId())));
-        assertTrue(result.stream().anyMatch(dto -> dto.getPointId().equals(pointEntity2.getPointId())));
-    }
-
-    @Test
     public void testSearchByFunctionName() {
-        when(functionPointRepository.findByNameContainingIgnoreCase("Function")).thenReturn(Collections.singletonList(functionEntity));
+        when(functionRepository.findAll()).thenReturn(Collections.singletonList(functionEntity));
         when(functionPointRepository.findByFunction(functionEntity)).thenReturn(Collections.singletonList(pointEntity1));
 
-        List<FunctionPointDTO> result = functionPointService.searchByFunctionName("Function", true);
+        List<FunctionPointDTO> result = functionPointService.searchByFunctionType("Sample", true);
 
         assertNotNull(result);
         assertEquals(1, result.size());

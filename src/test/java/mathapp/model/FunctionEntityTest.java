@@ -24,8 +24,8 @@ public class FunctionEntityTest {
 
     @Test
     public void setAndGetNameTest() {
-        functionEntity.setName("CosFunction");
-        assertEquals("CosFunction", functionEntity.getName());
+        functionEntity.setType("CosFunction");
+        assertEquals("CosFunction", functionEntity.getType());
     }
 
     @Test
@@ -49,7 +49,7 @@ public class FunctionEntityTest {
     @Test
     public void setAndGetPointsTest() {
         List<FunctionPointEntity> points = new ArrayList<>();
-        FunctionPointEntity point = new FunctionPointEntity(); // Предположим, что у вас есть этот класс
+        FunctionPointEntity point = new FunctionPointEntity();
         points.add(point);
         functionEntity.setPoints(points);
         assertEquals(points, functionEntity.getPoints());

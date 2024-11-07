@@ -1,6 +1,6 @@
 package mathapp.controller;
 
-import mathapp.DTO.FunctionPointDTO;
+import mathapp.dto.FunctionPointDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

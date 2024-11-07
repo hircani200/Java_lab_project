@@ -1,6 +1,6 @@
 package mathapp.controller;
 
-import mathapp.DTO.FunctionDTO;
+import mathapp.dto.FunctionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,8 +40,8 @@ public class FunctionController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<FunctionDTO>> getByName(@RequestParam String name) {
-        List<FunctionDTO> functions = functionService.getByName(name);
+    public ResponseEntity<List<FunctionDTO>> getByType(@RequestParam String type) {
+        List<FunctionDTO> functions = functionService.getByType(type);
         return ResponseEntity.ok(functions);
     }
 }

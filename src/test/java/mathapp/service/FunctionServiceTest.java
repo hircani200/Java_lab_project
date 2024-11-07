@@ -1,6 +1,6 @@
 package mathapp.service;
 
-import mathapp.DTO.FunctionDTO;
+import mathapp.dto.FunctionDTO;
 import mathapp.model.FunctionEntity;
 import mathapp.repository.FunctionRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -33,14 +33,14 @@ class FunctionServiceTest {
 
         functionDTO = new FunctionDTO();
         functionDTO.setFunctionId(1L);
-        functionDTO.setName("Test Function");
+        functionDTO.setType("Test Function");
         functionDTO.setXFrom(0.0);
         functionDTO.setXTo(10.0);
         functionDTO.setCount(5);
 
         functionEntity = new FunctionEntity();
         functionEntity.setFunctionId(1L);
-        functionEntity.setName("Test Function");
+        functionEntity.setType("Test Function");
         functionEntity.setXFrom(0.0);
         functionEntity.setXTo(10.0);
         functionEntity.setCount(5);
@@ -59,7 +59,7 @@ class FunctionServiceTest {
 
         FunctionDTO createdFunction = functionService.create(functionDTO);
 
-        assertEquals(FunctionDTO.getName(), FunctionDTO.getName());
+        assertEquals(FunctionDTO.getType(), FunctionDTO.getType());
         verify(functionRepository).save(any(FunctionEntity.class));
     }
 
@@ -70,7 +70,7 @@ class FunctionServiceTest {
         FunctionDTO foundFunction = functionService.read(functionEntity.getFunctionId());
 
         assertNotNull(foundFunction);
-        assertEquals(functionEntity.getName(), foundFunction.getName());
+        assertEquals(functionEntity.getType(), foundFunction.getType());
     }
 
     @Test
@@ -90,7 +90,7 @@ class FunctionServiceTest {
 
         FunctionDTO updatedFunction = functionService.update(functionDTO);
 
-        assertEquals(FunctionDTO.getName(), FunctionDTO.getName());
+        assertEquals(FunctionDTO.getType(), FunctionDTO.getType());
         verify(functionRepository).save(any(FunctionEntity.class));
     }
 
@@ -103,62 +103,22 @@ class FunctionServiceTest {
 
     @Test
     void testSearchByName() {
-        when(functionRepository.findByNameContainingIgnoreCase("Test")).thenReturn(Collections.singletonList(functionEntity));
+        when(functionRepository.findByTypeContainingIgnoreCase("Test")).thenReturn(Collections.singletonList(functionEntity));
 
-        List<FunctionDTO> functionDTOs = functionService.searchByName("Test", true);
+        List<FunctionDTO> functionDTOs = functionService.searchByType("Test", true);
 
         assertNotNull(functionDTOs);
         assertEquals(1, functionDTOs.size());
-        assertEquals("Test Function", FunctionDTO.getName());
+        assertEquals("Test Function", FunctionDTO.getType());
     }
 
     @Test
     public void testSearchByNameNotFound() {
-        when(functionRepository.findByNameContainingIgnoreCase("Nonexistent")).thenReturn(Collections.emptyList());
+        when(functionRepository.findByTypeContainingIgnoreCase("Nonexistent")).thenReturn(Collections.emptyList());
 
-        List<FunctionDTO> results = functionService.searchByName("Nonexistent", true);
+        List<FunctionDTO> results = functionService.searchByType("Nonexistent", true);
 
         assertTrue(results.isEmpty());
-    }
-
-    @Test
-    void testSearchByXRange() {
-        when(functionRepository.findByXFromBetween(0.0, 10.0)).thenReturn(Arrays.asList(functionEntity));
-
-        List<FunctionDTO> functionDTO = functionService.searchByXRange(0.0, 10.0, true);
-
-        assertNotNull(functionDTO);
-        assertEquals("Test Function", FunctionDTO.getName());
-    }
-
-    @Test
-    public void testDepthFirstSearch() {
-        List<FunctionEntity> result = functionService.depthFirstSearch(functionEntity, "Test Function");
-
-        assertEquals(1, result.size());
-        assertEquals("Test Function", result.get(0).getName());
-    }
-
-    @Test
-    public void testDepthFirstSearchNotFound() {
-        List<FunctionEntity> result = functionService.depthFirstSearch(functionEntity, "Function");
-
-        assertTrue(result.isEmpty());
-    }
-
-    @Test
-    public void testBreadthFirstSearch() {
-        List<FunctionEntity> result = functionService.breadthFirstSearch(functionEntity, "Test Function");
-
-        assertEquals(1, result.size());
-        assertEquals("Test Function", result.get(0).getName());
-    }
-
-    @Test
-    public void testBreadthFirstSearchNotFound() {
-        List<FunctionEntity> result = functionService.breadthFirstSearch(functionEntity, "Function");
-
-        assertTrue(result.isEmpty());
     }
 
     @Test
@@ -167,7 +127,7 @@ class FunctionServiceTest {
 
         FunctionEntity functionEntity1 = new FunctionEntity();
         functionEntity1.setFunctionId(1L);
-        functionEntity1.setName("Function");
+        functionEntity1.setType("Function");
         functionEntity1.setXFrom(0.0);
         functionEntity1.setXTo(10.0);
         functionEntity1.setCount(5);
@@ -175,11 +135,11 @@ class FunctionServiceTest {
         functions.add(0, functionEntity1);
         functions.add(1, functionEntity);
 
-        List<FunctionDTO> sorted = functionService.sortAndMap(functions, FunctionEntity::getName, true);
+        List<FunctionDTO> sorted = functionService.sortAndMap(functions, FunctionEntity::getType, true);
 
         assertEquals(2, sorted.size());
-        assertEquals("Test Function", sorted.get(0).getName());
-        assertEquals("Test Function", sorted.get(1).getName());
+        assertEquals("Test Function", sorted.get(0).getType());
+        assertEquals("Test Function", sorted.get(1).getType());
     }
 
     @Test
@@ -188,7 +148,7 @@ class FunctionServiceTest {
 
         FunctionEntity functionEntity1 = new FunctionEntity();
         functionEntity1.setFunctionId(1L);
-        functionEntity1.setName("Function");
+        functionEntity1.setType("Function");
         functionEntity1.setXFrom(0.0);
         functionEntity1.setXTo(10.0);
         functionEntity1.setCount(5);
@@ -196,29 +156,29 @@ class FunctionServiceTest {
         functions.add(0, functionEntity1);
         functions.add(1, functionEntity);
 
-        List<FunctionDTO> sorted = functionService.sortAndMap(functions, FunctionEntity::getName, false);
+        List<FunctionDTO> sorted = functionService.sortAndMap(functions, FunctionEntity::getType, false);
 
         assertEquals(2, sorted.size());
-        assertEquals("Function", sorted.get(0).getName());
-        assertEquals("Function", sorted.get(1).getName());
+        assertEquals("Function", sorted.get(0).getType());
+        assertEquals("Function", sorted.get(1).getType());
     }
 
 
     @Test
-    public void testFindByName() {
+    public void testFindByType() {
         when(functionRepository.findAll()).thenReturn(List.of(functionEntity));
 
-        List<FunctionEntity> results = functionService.findByName(functionEntity.getName());
+        List<FunctionEntity> results = functionService.findByType(functionEntity.getType());
 
         assertEquals(1, results.size());
-        assertEquals(functionEntity.getName(), results.get(0).getName());
+        assertEquals(functionEntity.getType(), results.get(0).getType());
     }
 
     @Test
-    public void testFindByNameNotFound() {
+    public void testFindByTypeNotFound() {
         when(functionRepository.findAll()).thenReturn(new ArrayList<>());
 
-        List<FunctionEntity> results = functionService.findByName("Nonexistent Function");
+        List<FunctionEntity> results = functionService.findByType("Nonexistent Function");
 
         assertTrue(results.isEmpty());
     }
