@@ -1,1 +1,1 @@
-UPDATE public.functions SET function_name = ?, x_from = ?, x_to = ?, count = ? where function_id = ?;
+UPDATE public.functions SET type = 'TanFunction', x_from = 1, x_to = 0, count = 3 where function_id = 2;

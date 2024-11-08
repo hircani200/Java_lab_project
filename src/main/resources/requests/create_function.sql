@@ -1,1 +1,1 @@
-INSERT INTO public.functions(function_id, function_name, x_from, x_to, count) VALUES (?, ?, ?, ?, ?);
+INSERT INTO public.functions(function_id, type, x_from, x_to, count) VALUES (2, 'SinFunction', 0.0, 10.0, 5);
