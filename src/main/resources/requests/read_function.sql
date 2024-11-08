@@ -1,1 +1,1 @@
-SELECT * FROM public.functions WHERE function_id = ?;
+SELECT * FROM public.functions WHERE function_id = 1;
